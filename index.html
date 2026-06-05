@@ -94,7 +94,6 @@
         .nav-container {
             max-width: 1400px; margin: 0 auto;
             display: flex; align-items: center; justify-content: space-between; height: 64px;
-            position: relative;
         }
         .logo {
             display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800;
@@ -112,8 +111,7 @@
         .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(99, 102, 241, 0.1); }
         .nav-link.active { color: var(--primary); }
 
-        .nav-actions { display: flex; align-items: center; gap: 12px; order: 2; }
-        .nav-toggle { order: 3; }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
         .btn-whatsapp-nav {
             padding: 8px 20px; background: linear-gradient(135deg, #25d366, #128c7e);
             color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
@@ -194,23 +192,6 @@
             transition: all 0.3s ease; font-family: inherit;
         }
         .filter-tab:hover, .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .location-filter {
-            padding: 8px 14px;
-            border-radius: 8px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 13px;
-            font-weight: 500;
-            font-family: inherit;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s ease;
-            min-width: 160px;
-        }
-        .location-filter:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
-        .location-filter option { background: var(--card); color: var(--text); }
 
         .streams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .stream-card {
@@ -344,203 +325,16 @@
         .toast-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
         .toast-content p { font-size: 13px; color: var(--text-muted); }
 
-        /* Tags Checkbox Group */
-        .tags-checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            padding: 12px;
-            background: var(--dark);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-        .tag-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            background: rgba(99, 102, 241, 0.08);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            color: var(--text);
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-        .tag-checkbox:hover { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3); }
-        .tag-checkbox input[type="checkbox"] {
-            width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;
-        }
-
-        /* Time Slots Group */
-        .time-slots-group {
-            background: var(--dark);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .time-slot-day {
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-        .time-slot-day:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        .day-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .day-slots {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-        }
-        .slot-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 8px;
-            background: rgba(99, 102, 241, 0.06);
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            color: var(--text-muted);
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-        .slot-checkbox:hover { background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.2); color: var(--text); }
-        .slot-checkbox input[type="checkbox"] {
-            width: 14px; height: 14px; accent-color: var(--primary); cursor: pointer;
-        }
-
-        /* Stream Card Time Slots */
-        .stream-timeslots {
-            margin-bottom: 10px;
-        }
-        .stream-slots-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .stream-slot {
-            padding: 3px 8px;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 100px;
-            font-size: 10px;
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        /* Profile Card Time Slots */
-        .profile-card-timeslots {
-            margin-bottom: 14px;
-        }
-        .profile-card-timeslots h4 {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .profile-slots-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .profile-slot {
-            padding: 4px 10px;
-            background: rgba(6, 182, 212, 0.12);
-            border: 1px solid rgba(6, 182, 212, 0.25);
-            border-radius: 100px;
-            font-size: 11px;
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-                .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-left: 8px;
-            order: 3;
-        }
-        .nav-toggle:hover { background: rgba(99, 102, 241, 0.15); }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         @media (max-width: 768px) {
-            .nav-toggle { display: block; }
-            .nav-links {
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: rgba(15, 23, 42, 0.98);
-                backdrop-filter: blur(20px);
-                border-bottom: 1px solid var(--border);
-                flex-direction: column;
-                align-items: stretch;
-                padding: 12px 24px;
-                gap: 4px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-                z-index: 999;
-            }
-            .nav-links.open {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            .nav-links .nav-link {
-                padding: 12px 16px;
-                border-radius: 10px;
-                font-size: 15px;
-                text-align: left;
-                width: 100%;
-            }
-            .nav-links .nav-link i { width: 24px; text-align: center; }
-            .nav-actions { gap: 6px; order: 2; }
-            .btn-whatsapp-nav {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .nav-toggle { order: 3; margin-left: 4px; }
-        
             .hero h1 { font-size: 36px; }
             .streams-grid { grid-template-columns: 1fr; }
             .stats-bar { gap: 24px; }
-
+            .nav-links { display: none; }
             .disclaimer-modal { padding: 24px; }
             .profiles-grid { grid-template-columns: 1fr; }
             .rooms-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .slot-grid { grid-template-columns: 1fr; }
-            .tags-checkbox-group { grid-template-columns: repeat(2, 1fr); }
-            .day-slots { grid-template-columns: 1fr; }
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -550,25 +344,22 @@
     </style>
 <base target="_blank">
 <base target="_blank">
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo"><i class="fas fa-video"></i> LiveFantasy</div>
-            <div class="nav-links" id="navLinks">
+            <div class="nav-links">
                 <button class="nav-link active" onclick="showPage('home')"><i class="fas fa-home" style="margin-right:6px"></i>Home</button>
-                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Linkups</button>
+                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Models</button>
                 <button class="nav-link" onclick="showPage('profiles')"><i class="fas fa-users" style="margin-right:6px"></i>Profiles</button>
                 <button class="nav-link" onclick="showPage('live-rooms')"><i class="fas fa-door-open" style="margin-right:6px"></i>Playhouse</button>
             </div>
             <div class="nav-actions">
-                <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-whatsapp-nav" target="_blank"><i class="fab fa-whatsapp"></i>Register</a>
+                <a href="https://wa.me/27123456789?text=Hi! I'm interested in LiveFantasy." class="btn-whatsapp-nav" target="_blank"><i class="fab fa-whatsapp"></i>Register</a>
+                <button class="btn-live-chat-nav" onclick="showToast('Live Chat','Live chat feature coming soon!')"><i class="fas fa-comments"></i> Live Chat</button>
             </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -583,7 +374,7 @@
                     <p>For your personal pleasure!</p>
                     <div class="hero-buttons">
                         <button class="btn-large join" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Join Now</button>
-                        <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-large whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                        <a href="https://wa.me/27123456789?text=Hi! I'm interested in LiveFantasy." class="btn-large whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
                     </div>
                 </div>
             </section>
@@ -597,26 +388,7 @@
             <section class="streams-section">
                 <div class="section-header">
                     <h2 class="section-title">Top Models</h2>
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                        <select class="location-filter" id="homeLocationFilter">
-                            <option value="all">All Cities</option>
-                            <option value="Pretoria">Pretoria</option>
-                            <option value="Johannesburg">Johannesburg</option>
-                            <option value="Durban">Durban</option>
-                            <option value="Cape Town">Cape Town</option>
-                            <option value="Port Elizabeth">Port Elizabeth</option>
-                            <option value="Bloemfontein">Bloemfontein</option>
-                            <option value="Nelspruit">Nelspruit</option>
-                            <option value="Polokwane">Polokwane</option>
-                            <option value="Rustenburg">Rustenburg</option>
-                            <option value="Kimberley">Kimberley</option>
-                            <option value="East London">East London</option>
-                            <option value="Pietermaritzburg">Pietermaritzburg</option>
-                        </select>
-                        <select class="location-filter" id="homeRegionFilter" style="display:none;">
-                            <option value="all">All Areas</option>
-                        </select>
-                        <div class="filter-tabs" id="homeFilterTabs">
+                    <div class="filter-tabs" id="homeFilterTabs">
                         <button class="filter-tab active" data-cat="all">All</button>
                         <button class="filter-tab" data-cat="young">Young</button>
                         <button class="filter-tab" data-cat="mature">Mature</button>
@@ -633,7 +405,6 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
-                    </div>
                     </div>
                 </div>
                 <div class="streams-grid" id="streamsGrid"></div>
@@ -644,27 +415,8 @@
         <div class="page" id="page-browse">
             <section class="streams-section" style="padding-top: 32px;">
                 <div class="section-header">
-                    <h2 class="section-title">All Linkups</h2>
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                        <select class="location-filter" id="browseLocationFilter">
-                            <option value="all">All Cities</option>
-                            <option value="Pretoria">Pretoria</option>
-                            <option value="Johannesburg">Johannesburg</option>
-                            <option value="Durban">Durban</option>
-                            <option value="Cape Town">Cape Town</option>
-                            <option value="Port Elizabeth">Port Elizabeth</option>
-                            <option value="Bloemfontein">Bloemfontein</option>
-                            <option value="Nelspruit">Nelspruit</option>
-                            <option value="Polokwane">Polokwane</option>
-                            <option value="Rustenburg">Rustenburg</option>
-                            <option value="Kimberley">Kimberley</option>
-                            <option value="East London">East London</option>
-                            <option value="Pietermaritzburg">Pietermaritzburg</option>
-                        </select>
-                        <select class="location-filter" id="browseRegionFilter" style="display:none;">
-                            <option value="all">All Areas</option>
-                        </select>
-                        <div class="filter-tabs" id="browseFilterTabs">
+                    <h2 class="section-title">All Models</h2>
+                    <div class="filter-tabs" id="browseFilterTabs">
                         <button class="filter-tab active" data-cat="all">All</button>
                         <button class="filter-tab" data-cat="young">Young</button>
                         <button class="filter-tab" data-cat="mature">Mature</button>
@@ -681,7 +433,6 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
-                    </div>
                     </div>
                 </div>
                 <div class="streams-grid" id="browseGrid"></div>
@@ -720,8 +471,8 @@
         <div class="page" id="page-live-rooms">
             <section class="streams-section" style="padding-top: 32px;">
                 <div class="section-header">
-                    <h2 class="section-title">Come Visit Our Playhouse For Unlimited Pleasure</h2>
-                    <p style="color: var(--text-muted); font-size: 14px;">Limited slots avaliable, book your slot!</p>
+                    <h2 class="section-title">Whatsapp Group Live Rooms</h2>
+                    <p style="color: var(--text-muted); font-size: 14px;">Join our whatsapp group live sex chats!</p>
                 </div>
                 <div class="rooms-grid" id="roomsGrid"></div>
             </section>
@@ -745,47 +496,11 @@
                         <div class="note">Special offer: Save R550 on your first two months!</div>
                     </div>
                     <form id="joinForm" onsubmit="handleJoinSubmit(event)">
-                        <div class="form-group" style="margin-bottom: 20px;">
-                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;">
-                                <input type="checkbox" id="regLinkups" name="linkups" style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
-                                <span style="font-size:14px;font-weight:500;color:var(--text);">I also want to be listed for Linkups (in-person meetings)</span>
-                            </label>
-                        </div>
-                        <div class="form-group" id="regionGroup" style="display:none;">
-                            <label for="regCity">Your City (Optional)</label>
-                            <select id="regCity" name="city">
-                                <option value="">Select your city</option>
-                                <option value="Pretoria">Pretoria</option>
-                                <option value="Johannesburg">Johannesburg</option>
-                                <option value="Durban">Durban</option>
-                                <option value="Cape Town">Cape Town</option>
-                                <option value="Port Elizabeth">Port Elizabeth</option>
-                                <option value="Bloemfontein">Bloemfontein</option>
-                                <option value="Nelspruit">Nelspruit</option>
-                                <option value="Polokwane">Polokwane</option>
-                                <option value="Rustenburg">Rustenburg</option>
-                                <option value="Kimberley">Kimberley</option>
-                                <option value="East London">East London</option>
-                                <option value="Pietermaritzburg">Pietermaritzburg</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="suburbGroup" style="display:none;">
-                            <label for="regSuburb">Your Suburb / Area (Optional)</label>
-                            <select id="regSuburb" name="suburb">
-                                <option value="">Select your area</option>
-                            </select>
-                        </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="regUsername">Username</label>
-                                <input type="text" id="regUsername" name="username" required placeholder="Choose a username">
-                            </div>
                             <div class="form-group">
                                 <label for="regAge">Age</label>
                                 <input type="number" id="regAge" name="age" min="18" max="100" required placeholder="Your age">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="regType">Type</label>
                                 <select id="regType" name="type" required>
@@ -795,6 +510,8 @@
                                     <option value="fit">Fit</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="regEthnicity">Ethnicity</label>
                                 <select id="regEthnicity" name="ethnicity" required>
@@ -807,111 +524,23 @@
                                     <option value="other">Other</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="regCountry">Country</label>
-                            <select id="regCountry" name="country" required>
-                                <option value="">Select country</option>
-                                <option value="za">South Africa</option>
-                                <option value="ls">Lesotho</option>
-                                <option value="na">Namibia</option>
-                                <option value="ng">Nigeria</option>
-                                <option value="ke">Kenya</option>
-                                <option value="et">Ethiopia</option>
-                                <option value="gh">Ghana</option>
-                                <option value="mz">Mozambique</option>
-                                <option value="us">United States</option>
-                                <option value="uk">United Kingdom</option>
-                                <option value="zw">Zimbabwe</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tags (Select all that apply)</label>
-                            <div class="tags-checkbox-group">
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="young"> Young</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="mature"> Mature</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="milf"> Milf</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="slim"> Slim/petite</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="bbw"> BBW</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="thick"> Thick</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="toys"> Toys</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="ebony"> Ebony</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="coloured"> Coloured</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="indian"> Indian</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="fit"> Fit</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="submissive"> Submissive</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="play"> Role Play</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="busty"> Busty</label>
-                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="joi"> JOI</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Available Time Slots</label>
-                            <div class="time-slots-group">
-                                <div class="time-slot-day">
-                                    <label class="day-label">Monday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Tuesday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Wednesday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Thursday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Friday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Saturday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
-                                <div class="time-slot-day">
-                                    <label class="day-label">Sunday</label>
-                                    <div class="day-slots">
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-morning"> Morning (08:00-12:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-afternoon"> Afternoon (12:00-18:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-evening"> Evening (18:00-00:00)</label>
-                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-night"> Night (00:00-08:00)</label>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="regCountry">Country</label>
+                                <select id="regCountry" name="country" required>
+                                    <option value="">Select country</option>
+                                    <option value="za">South Africa</option>
+                                    <option value="ls">Lesotho</option>
+                                    <option value="na">Namibia</option>
+                                    <option value="ng">Nigeria</option>
+                                    <option value="ke">Kenya</option>
+                                    <option value="et">Ethiopia</option>
+                                    <option value="gh">Ghana</option>
+                                    <option value="mz">Mozambique</option>
+                                    <option value="us">United States</option>
+                                    <option value="uk">United Kingdom</option>
+                                    <option value="zw">Zimbabwe</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -934,40 +563,21 @@
     </div>
 
     <script>
-        // City regions/suburbs data
-        const cityRegions = {
-            "Pretoria": ["Arcadia", "Brooklyn", "Centurion", "Clubview", "Faerie Glen", "Garsfontein", "Hatfield", "Lynnwood", "Menlyn", "Montana", "Moreleta Park", "Muckleneuk", "Newlands", "Silverton", "Sunnyside", "Waterkloof", "Wonderboom", "Akasia", "Mabopane", "Soshanguve", "Atteridgeville", "Mamelodi", "Eersterust", "Waverley", "Colbyn"],
-            "Johannesburg": ["Alexandra", "Bedfordview", "Berea", "Braamfontein", "Bryanston", "Craighall", "Crown Mines", "Douglasdale", "Dunkeld", "Emmarentia", "Fourways", "Greenside", "Houghton", "Hyde Park", "Illovo", "Johannesburg CBD", "Kensington", "Killarney", "Linden", "Malvern", "Melrose", "Melville", "Midrand", "Morningside", "Northcliff", "Norwood", "Observatory", "Orange Grove", "Parkhurst", "Parktown", "Randburg", "Randpark Ridge", "Rivonia", "Roodepoort", "Rosebank", "Sandton", "Soweto", "Sunninghill", "Woodmead", "Yeoville"],
-            "Durban": ["Amanzimtoti", "Berea", "Bluff", "Chatsworth", "Durban CBD", "Durban North", "Glenwood", "Hillcrest", "Kloof", "La Lucia", "Morningside", "Mount Edgecombe", "Musgrave", "Overport", "Phoenix", "Pinetown", "Point Waterfront", "Queensburgh", "Sea View", "Sydenham", "Umbilo", "Umhlanga", "Umlazi", "Westville", "Windermere", "Yellowwood Park"],
-            "Cape Town": ["Athlone", "Bantry Bay", "Bergvliet", "Blueberg", "Bo-Kaap", "Camps Bay", "Cape Town CBD", "Claremont", "Clifton", "Constantia", "Diep River", "Durbanville", "Fish Hoek", "Gardens", "Green Point", "Hout Bay", "Kensington", "Kirstenhof", "Kommetjie", "Kraaifontein", "Lansdowne", "Mitchells Plain", "Muizenberg", "Newlands", "Observatory", "Paarden Eiland", "Panorama", "Parklands", "Parow", "Pinelands", "Rondebosch", "Sea Point", "Simons Town", "Somerset West", "Steenberg", "Stellenbosch", "Strand", "Table View", "Tokai", "Tygervalley", "Woodstock", "Wynberg"],
-            "Port Elizabeth": ["Algoa Park", "Central", "Charlo", "Cotswold", "Despatch", "Fernglen", "Gelvandale", "Gqeberha CBD", "Greenacres", "Humewood", "Kabega Park", "Kemsley Park", "Korsten", "Linton Grange", "Lovemore Park", "Mill Park", "Mount Croix", "New Brighton", "Newton Park", "North End", "Parsons Hill", "Port Elizabeth", "Richmond Hill", "Schauderville", "Seaview", "Sherwood", "South End", "St Georges Park", "Summerstrand", "Sydenham", "Theescombe", "Walmer", "Westering", "Woodlands"],
-            "Bloemfontein": ["Bayswater", "Bloemfontein CBD", "Brandwag", "Dan Pienaar", "Fichardtpark", "Generaal De Wet", "Heidedal", "Hilton", "Langenhoven Park", "Mangaung", "Maselspoort", "Naval Hill", " Noordhoek", "Ooseinde", "Park West", "Pellissier", "Rayton", "Roodewal", "Rosestad", "Sasolburg", "Universitas", "Uitsig", "Vista Park", "Waverley", "Westdene", "Wilgehof", "Willows"],
-            "Nelspruit": ["Crocodile Valley", "Ehlanzeni", "Kamagugu", "Kanyamazane", "Kiepersol", "Lekazi", "Marloth Park", "Matsulu", "Mbombela", "Nelspruit CBD", "Ngodwana", "Nkomazi", "Phola", "Rocky Drift", "Sabie", "Skukuza", "Tekwane", "White River"],
-            "Polokwane": ["Bendor", "Chuene", "Dendron", "Fauna Park", "Irene", "Lebowakgomo", "Mankweng", "Mokopane", "Namakgale", "New Pietersburg", "Polokwane CBD", "Seshego", "Thabazimbi", "Thohoyandou", "Turfloop", "University of Limpopo", "Welgelegen"],
-            "Rustenburg": ["Bafokeng", "Boitekong", "Cashan", "Geelhoutpark", "Kroondal", "Lethabong", "Meriting", "Mogwase", "Rustenburg CBD", "Safari Gardens", "Suncity", "Tlhabane", "Waterval"],
-            "Kimberley": ["Ashburnham", "Beaconsfield", "Cassandra", "De Beers", "Diamant Park", "Galeshewe", "Herlear", "Homestead", "Kimberley CBD", "Kimberley North", "Lucerne", "Mankurwane", "Moghul Park", "New Park", "Pescodia", "Ritchie", "Roodepan", "South Ridge", "Vergenoeg", "Wildeklawer"],
-            "East London": ["Amalinda", "Beacon Bay", "Berea", "Blue Bend", "Buffalo Flats", "Cambridge", "Dorchester Heights", "East London CBD", "Fernwood", "Gonubie", "Haven Hills", "Kidds Beach", "Mabel", "Meadowbrook", "Nahoon", "North End", "Pefferville", "Quigney", "Southernwood", "Sunnyridge", "Vincent", "West Bank"],
-            "Pietermaritzburg": ["Allandale", "Ashdown", "Bisley", "Copesville", "Dundee", "Edendale", "Elandskop", "Epumalanga", "Foxhill", "Glenwood", "Hilton", "Impendle", "Lincoln Meade", "Mbali", "Montrose", "Mountain Rise", "Northdale", "Pietermaritzburg CBD", "Plessislaer", "Scottsville", "Sweetwaters", "The Grange", "Town Bush", "Wembley", "Woodlands"]
-        };
-
-        function getRegionsForCity(city) {
-            return cityRegions[city] || [];
-        }
-
-        // Stream data with gender, age, and location fields
-                const streams = [
-            { id: 1, title: "Come have a sensual experience with a feisty babe", streamer: "Snowdrop", age: 25, gender: "female", category: "ebony", location: "Pretoria", region: "Arcadia", thumbnail: "https://i.ibb.co/DHczXtmV/ID17b.jpg", verified: true, uniqueCode: "LF-SARA-9921", whatsapp: "+27765713720", timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"] },
-            { id: 2, title: "I am the girl next door with a naughty side", streamer: "Joii", age: 22, gender: "female", category: "slim", location: "Johannesburg", region: "Sandton", thumbnail: "https://i.ibb.co/ccgXhNQD/ID16b.jpg", verified: true, uniqueCode: "LF-MIKE-4452", whatsapp: "+274113117159", timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"] },
-            { id: 3, title: "Hot sexy lady, very tiny and tight in all the right places.", streamer: "Abby", age: 21, gender: "female", category: "slim", location: "Durban", region: "Umhlanga", thumbnail: "https://i.ibb.co/5WgtQwGq/ID15d.jpg", verified: true, uniqueCode: "LF-LISA-7783", whatsapp: "+27123456791", timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"] },
-            { id: 4, title: "Feeling freaky? Seductive Red fox, open minded", streamer: "Crystal", age: 35, gender: "female", category: "coloured", location: "Cape Town", region: "Sea Point", thumbnail: "https://i.ibb.co/HfBkpSqn/ID12b.jpg", verified: false, uniqueCode: "LF-GAME-1124", whatsapp: "+27123456792", timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"] },
-            { id: 5, title: "Sexy slender erotic dream. Come see me", streamer: "Melinda", age: 29, gender: "female", category: "slim", location: "Pretoria", region: "Menlyn", thumbnail: "https://i.ibb.co/7xJXhZfm/ID5c.jpg", verified: true, uniqueCode: "LF-AMY-6655", whatsapp: "+27123456793", timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"] },
-            { id: 6, title: "Cute babe with curves in all the right places. Cum and play.", streamer: "Keisha", age: 23, gender: "female", category: "bbw", location: "Johannesburg", region: "Randburg", thumbnail: "https://i.ibb.co/TMgGh0gS/ID11b.jpg", verified: false, uniqueCode: "LF-CARL-3386", whatsapp: "+27123456794", timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"] },
-            { id: 7, title: "A curvy babe that will love for you to come and have some fun with her.", streamer: "Wendy", age: 31, gender: "female", category: "bbw", location: "Durban", region: "Berea", thumbnail: "https://i.ibb.co/R4HtCfdc/ID3c.jpg", verified: false, uniqueCode: "LF-STUD-5547", whatsapp: "+27123456795", timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"] },
-            { id: 8, title: "Very Curvaceous Babe! Curves in all the right places", streamer: "Zinhle", age: 26, gender: "female", category: "thick", location: "Cape Town", region: "Claremont", thumbnail: "https://i.ibb.co/QvxZhmfD/ID14b.jpg", verified: true, uniqueCode: "LF-FION-8878", whatsapp: "+27123456796", timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"] },
-            { id: 9, title: "With all the right curves in all the right places, come satisfy your desires", streamer: "Liza", age: 22, gender: "female", category: "thick", location: "Pretoria", region: "Hatfield", thumbnail: "https://i.ibb.co/39ST11Br/ID1.jpg", verified: true, uniqueCode: "LF-PULS-9901", whatsapp: "+27123456797", timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"] },
-            { id: 10, title: "Hi there! I'm Mel", streamer: "Mel", age: 28, gender: "female", category: "mature", location: "Johannesburg", region: "Rosebank", thumbnail: "https://i.ibb.co/ynmXM2nV/ID4a.jpg", verified: false, uniqueCode: "LF-WAND-2202", whatsapp: "+27123456798", timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"] },
-            { id: 11, title: "A hot, busty, super sexy curvylicious honey that's home alone and waiting for you", streamer: "Kimberley", age: 28, gender: "female", category: "busty", location: "Durban", region: "Morningside", thumbnail: "https://i.ibb.co/cXQkfNZT/ID9a.jpg", verified: true, uniqueCode: "LF-NINJ-3303", whatsapp: "+27123456799", timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"] },
-            { id: 12, title: "A hot honey for lots of fun. Ask about my greek specials", streamer: "Thato", age: 24, gender: "female", category: "mature", location: "Cape Town", region: "Green Point", thumbnail: "https://i.ibb.co/WpnDnv4L/ID6a.jpg", verified: true, uniqueCode: "LF-GINA-4404", whatsapp: "+27123456800", timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"] },
+        // Stream data with gender and age fields
+        const streams = [
+            { id: 1, title: "Come have a sensual experience with a feisty babe", streamer: "Snowdrop", age: 25, gender: "female", category: "ebony", thumbnail: "https://i.ibb.co/DHczXtmV/ID17b.jpg", verified: true, uniqueCode: "SC-SARA-9921", whatsapp: "+27765713720" },
+            { id: 2, title: "I am the girl next door with a naughty side", streamer: "Joii", age: 22, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/ccgXhNQD/ID16b.jpg", verified: true, uniqueCode: "SC-MIKE-4452", whatsapp: "+274113117159" },
+            { id: 3, title: "Hot sexy lady, very tiny and tight in all the right places.", streamer: "Abby", age: 21, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/5WgtQwGq/ID15d.jpg", verified: true, uniqueCode: "SC-LISA-7783", whatsapp: "+27123456791" },
+            { id: 4, title: "Feeling freaky? Seductive Red fox, open minded", streamer: "Crystal", age: 35, gender: "female", category: "coloured", thumbnail: "https://i.ibb.co/HfBkpSqn/ID12b.jpg", verified: false, uniqueCode: "SC-GAME-1124", whatsapp: "+27123456792" },
+            { id: 5, title: "Sexy slender erotic dream. Come see me", streamer: "Melinda", age: 29, gender: "female", category: "slim", thumbnail: "https://i.ibb.co/7xJXhZfm/ID5c.jpg", verified: true, uniqueCode: "SC-AMY-6655", whatsapp: "+27123456793" },
+            { id: 6, title: "Cute babe with curves in all the right places. Cum and play.", streamer: "Keisha", age: 23, gender: "female", category: "bbw", viewers: 1543, thumbnail: "https://i.ibb.co/TMgGh0gS/ID11b.jpg", verified: false, uniqueCode: "SC-CARL-3386", whatsapp: "+27123456794" },
+            { id: 7, title: "A curvy babe that will love for you to come and have some fun with her.", streamer: "Wendy", age: 31, gender: "female", category: "bbw", thumbnail: "https://i.ibb.co/R4HtCfdc/ID3c.jpg", verified: false, uniqueCode: "SC-STUD-5547", whatsapp: "+27123456795" },
+            { id: 8, title: "Very Curvaceous Babe! Curves in all the right places", streamer: "Zinhle", age: 26, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/QvxZhmfD/ID14b.jpg", verified: true, uniqueCode: "SC-FION-8878", whatsapp: "+27123456796" },
+            { id: 9, title: "With all the right curves in all the right places, come satisfy your desires", streamer: "Liza", age: 22, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/39ST11Br/ID1.jpg", verified: true, uniqueCode: "SC-PULS-9901", whatsapp: "+27123456797" },
+            { id: 10, title: "Hi there! I'm Mel", streamer: "Mel", age: 28, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/ynmXM2nV/ID4a.jpg", verified: false, uniqueCode: "SC-WAND-2202", whatsapp: "+27123456798" },
+            { id: 11, title: "A hot, busty, super sexy curvylicious honey that's home alone and waiting for you", streamer: "Kimberley", age: 28, gender: "female", category: "busty", thumbnail: "https://i.ibb.co/cXQkfNZT/ID9a.jpg", verified: true, uniqueCode: "SC-NINJ-3303", whatsapp: "+27123456799" },
+            { id: 12, title: "A hot honey for lots of fun. Ask about my greek specials", streamer: "Thato", age: 24, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/WpnDnv4L/ID6a.jpg", verified: true, uniqueCode: "SC-GINA-4404", whatsapp: "+27123456800" },
+            
         ];
 
         // Profile data with galleries, bios, and matching categories
@@ -976,10 +586,10 @@
                 id: 1, name: "Snowdrop", handle: "@snowdrop", avatar: "SN", category: "ebony",
                 bio: "Feisty babe ready to give you a sensual experience you will never forget. Open-minded and always up for fun.",
                 tags: ["Ebony", "Sensual", "Open Minded", "Private Shows"],
-                timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"],
                 gallery: [
                     "https://i.ibb.co/DHczXtmV/ID17b.jpg",
-                    "https://i.ibb.co/xqL6j0K3/ID17a.jpg"
+                    "https://i.ibb.co/xqL6j0K3/ID17a.jpg",
+                    
                 ],
                 whatsapp: "+27765713720"
             },
@@ -987,10 +597,10 @@
                 id: 2, name: "Joii", handle: "@joii", avatar: "JO", category: "slim",
                 bio: "The girl next door with a very naughty side. Slim, petite and ready to make your fantasies come true.",
                 tags: ["Slim", "Petite", "Girl Next Door", "Naughty"],
-                timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"],
                 gallery: [
                     "https://i.ibb.co/ccgXhNQD/ID16b.jpg",
-                    "https://i.ibb.co/LT0SLHm/ID16a.jpg"
+                    "https://i.ibb.co/LT0SLHm/ID16a.jpg",
+                    ""
                 ],
                 whatsapp: "+274113117159"
             },
@@ -998,10 +608,10 @@
                 id: 3, name: "Abby", handle: "@abby", avatar: "AB", category: "slim",
                 bio: "Hot, sexy and very tiny. Tight in all the right places and ready to show you a good time.",
                 tags: ["Slim", "Petite", "Sexy", "Tight"],
-                timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"],
                 gallery: [
                     "https://i.ibb.co/5WgtQwGq/ID15d.jpg",
-                    "https://i.ibb.co/ccZ2Qdpx/ID15c.jpg"
+                    "https://i.ibb.co/ccZ2Qdpx/ID15c.jpg",
+                    ""
                 ],
                 whatsapp: "+27123456791"
             },
@@ -1009,10 +619,10 @@
                 id: 4, name: "Crystal", handle: "@crystal", avatar: "CR", category: "coloured",
                 bio: "Seductive red fox with an open mind. Feeling freaky? Come play with me and let's explore together.",
                 tags: ["Coloured", "Seductive", "Open Minded", "Freaky"],
-                timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"],
                 gallery: [
                     "https://i.ibb.co/HfBkpSqn/ID12b.jpg",
-                    "https://i.ibb.co/35nYzNGK/ID12a.jpg"
+                    "https://i.ibb.co/35nYzNGK/ID12a.jpg",
+                    ""
                 ],
                 whatsapp: "+27123456792"
             },
@@ -1020,11 +630,11 @@
                 id: 5, name: "Melinda", handle: "@melinda", avatar: "ME", category: "slim",
                 bio: "Sexy slender erotic dream. Let me be your fantasy and give you the experience you have been craving.",
                 tags: ["Slim", "Erotic", "Fantasy", "Slender"],
-                timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"],
                 gallery: [
                     "https://i.ibb.co/7xJXhZfm/ID5c.jpg",
                     "https://i.ibb.co/0RCStN9c/ID5b.jpg",
                     "https://i.ibb.co/Jw6GGXFf/ID5a.jpg"
+                   
                 ],
                 whatsapp: "+27123456793"
             },
@@ -1032,8 +642,8 @@
                 id: 6, name: "Keisha", handle: "@keisha", avatar: "KE", category: "bbw",
                 bio: "Cute babe with curves in all the right places. BBW beauty who loves to play and have fun with you.",
                 tags: ["BBW", "Curvy", "Cute", "Playful"],
-                timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"],
                 gallery: [
+                    "https://i.ibb.co/TMgGh0gS/ID11b.jpg",
                     "https://i.ibb.co/TMgGh0gS/ID11b.jpg",
                     "https://i.ibb.co/bR6Cgmz6/ID11a.jpg"
                 ],
@@ -1043,10 +653,10 @@
                 id: 7, name: "Wendy", handle: "@wendy", avatar: "WE", category: "bbw",
                 bio: "A curvy babe that would love for you to come have some fun with her. BBW with a big personality and even bigger heart.",
                 tags: ["BBW", "Curvy", "Fun", "Big Personality"],
-                timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"],
                 gallery: [
                     "https://i.ibb.co/R4HtCfdc/ID3c.jpg",
-                    "https://i.ibb.co/Jj5YN7q9/ID3b.jpg"
+                    "https://i.ibb.co/Jj5YN7q9/ID3b.jpg",
+                
                 ],
                 whatsapp: "+27123456795"
             },
@@ -1054,11 +664,11 @@
                 id: 8, name: "Zinhle", handle: "@zinhle", avatar: "ZI", category: "thick",
                 bio: "Very curvaceous babe with curves in all the right places. Thick and beautiful, ready to satisfy your desires.",
                 tags: ["Thick", "Curvaceous", "Beautiful", "Desires"],
-                timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"],
                 gallery: [
                     "https://i.ibb.co/QvxZhmfD/ID14b.jpg",
                     "https://i.ibb.co/5xwLsBb0/ID14c.jpg",
-                    "https://i.ibb.co/q3JWbjGs/ID14a.jpg"
+                    "https://i.ibb.co/q3JWbjGs/ID14a.jpg",
+
                 ],
                 whatsapp: "+27123456796"
             },
@@ -1066,10 +676,10 @@
                 id: 9, name: "Liza", handle: "@liza", avatar: "LI", category: "thick",
                 bio: "With all the right curves in all the right places. Come satisfy your desires with this thick beauty.",
                 tags: ["Thick", "Curvy", "Satisfying", "Desires"],
-                timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"],
                 gallery: [
                     "https://i.ibb.co/39ST11Br/ID1.jpg",
-                    "https://i.ibb.co/Mk6DJZy4/ID1b.jpg"
+                    "https://i.ibb.co/Mk6DJZy4/ID1b.jpg",
+                    "https://i.ibb.co/39ST11Br/ID1.jpg"
                 ],
                 whatsapp: "+27123456797"
             },
@@ -1077,9 +687,10 @@
                 id: 10, name: "Mel", handle: "@mel", avatar: "ML", category: "mature",
                 bio: "Experienced mature lady who knows exactly what you need. Let me take care of you in ways you have only dreamed of.",
                 tags: ["Mature", "Experienced", "Caring", "Dreams"],
-                timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"],
                 gallery: [
-                    "https://i.ibb.co/ynmXM2nV/ID4a.jpg"
+                    "https://i.ibb.co/ynmXM2nV/ID4a.jpg",
+                    "https://i.ibb.co/ynmXM2nV/ID4a.jpg",
+                   
                 ],
                 whatsapp: "+27123456798"
             },
@@ -1087,9 +698,9 @@
                 id: 11, name: "Kimberley", handle: "@kimberley", avatar: "KI", category: "busty",
                 bio: "Hot, busty, super sexy curvylicious honey that is home alone and waiting just for you. Do not keep me waiting.",
                 tags: ["Busty", "Curvy", "Sexy", "Waiting"],
-                timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"],
                 gallery: [
-                    "https://i.ibb.co/cXQkfNZT/ID9a.jpg"
+                    "https://i.ibb.co/cXQkfNZT/ID9a.jpg",
+                   
                 ],
                 whatsapp: "+27123456799"
             },
@@ -1097,9 +708,9 @@
                 id: 12, name: "Thato", handle: "@thato", avatar: "TH", category: "mature",
                 bio: "A hot honey for lots of fun. Ask about my special services. Mature and experienced in pleasing you.",
                 tags: ["Mature", "Fun", "Specials", "Experienced"],
-                timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"],
                 gallery: [
-                    "https://i.ibb.co/Ng4wpmxH/ID8a.jpg"
+                    "https://i.ibb.co/Ng4wpmxH/ID8a.jpg",
+                    
                 ],
                 whatsapp: "+27123456800"
             }
@@ -1108,40 +719,40 @@
         // Live Rooms data
         const rooms = [
             {
-                id: 1, name: "Pretoria Playhouse", subtitle: "2 Hour Session",
+                id: 1, name: "Pretoria Playhouse", subtitle: "3 Hour Session",
                 bio: "Join our guesthouse of pleasure.",
-                features: ["5 Women", "Secure Venue", "Private Rooms"],
-                slots: ["10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"],
-                price: "R450", period: "per Session",
+                features: ["Up to 4 hours streaming per week", "Basic chat moderation", "Standard video quality", "Community support group"],
+                slots: ["Mon 18:00-20:00", "Wed 18:00-20:00", "Fri 18:00-20:00", "Sat 10:00-12:00"],
+                price: "R150", period: "per month",
                 whatsapp: "+270812797778",
                 message: "Hi! I'm interested in joining the Pretoria Playhouse package. Please send me more details."
             },
             {
                 id: 2, name: "Pretoria Playhouse", subtitle: "Full Night + Accommodation",
-                bio: "Our most popular entertainment package, overnight fun with beautiful women.",
-                features: ["Accommodation", "10 Women", "Secure Venue", "Private Rooms","Complementary Drinks", "Transportation"],
-                slots: ["Friday 19:00-08:00", "Sat 19:00-08:00"],
-                price: "R950", period: "per Session",
+                bio: "Our most popular package for growing creators. More streaming hours, priority support, and exclusive group chats with fellow streamers.",
+                features: ["Up to 15 hours streaming per week", "Advanced chat moderation", "HD video quality", "Priority WhatsApp support", "Exclusive group access", "Monthly creator workshops"],
+                slots: ["Mon-Thu 18:00-21:00", "Fri 18:00-22:00", "Sat-Sun 10:00-14:00", "Sun 19:00-22:00"],
+                price: "R350", period: "per month",
                 whatsapp: "+270812797778",
                 message: "Hi! I'm interested in joining the Pretoria Playhouse package. Please send me more details."
             },
             {
-                id: 3, name: "Midrand Playhouse", subtitle: "2 Hour Session",
-                bio: "The ultimate day pleasure for those who want to have pleasure.",
-                features: [ "5 Women", "Secure Venue", "Private Rooms",],
-                slots: ["10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"],
-                price: "R450", period: "per Session",
+                id: 3, name: "Midrand Playhouse", subtitle: "3 Hour Session",
+                bio: "The ultimate streaming experience for serious creators. Unlimited hours, 4K quality, personal mentorship, and VIP community access.",
+                features: ["Unlimited streaming hours", "Premium chat & moderation tools", "4K video quality", "24/7 WhatsApp support", "VIP community access", "Weekly 1-on-1 mentorship", "Revenue sharing program", "Featured placement"],
+                slots: ["Anytime - 24/7 Access", "Prime slots reserved", "Weekend priority", "Holiday special events"],
+                price: "R650", period: "per session",
                 whatsapp: "+270812797778",
                 message: "Hi! I'm interested in joining the Midrand Playhouse package. Please send me more details."
             },
                 {
-                    id: 4, name: "Midrand Playhouse", subtitle: "Full Night Access + Accommodation",
-                    bio: "Full Night of fun with beautiful women for your pleasure.",
-                    features: ["Accommodation", "Parking", "Private Rooms", "Complementary Drinks", "Complementary Food", "Transportation"],
-                    slots: ["Friday 19:00-08:00", "Sat 19:00-08:00"],
-                    price: "R1000", period: "per Session",
-                    whatsapp: "+27812797778",
-                    message: "Hi! I'm interested in joining the Midrand Playhouse package. Please send me more details."
+                    id: 4, name: "Johannesburg Playhouse", subtitle: "Full Night Access + Accommodation",
+                    bio: "Perfect for beginners who want to dip their toes into live streaming. Get access to basic features and a supportive community of new streamers.",
+                    features: ["Up to 5 hours streaming per week", "Basic chat moderation", "Standard video quality", "Community support group"],
+                    slots: ["Friday 19:00-08:00", "Sat 19:00-08:00", "Fri 18:00-20:00"],
+                    price: "R150", period: "per session",
+                    whatsapp: "+270812797778",
+                    message: "Hi! I'm interested in joining the Johannesburg Playhouse package. Please send me more details."
                 }
 
         ];
@@ -1162,11 +773,6 @@
                     link.classList.add('active');
                 }
             });
-
-            // Re-render content when switching to specific pages
-            if (pageName === 'profiles') {
-                renderProfiles('profilesGrid', 'all', 'all', 'all');
-            }
 
             // Scroll to top
             window.scrollTo(0, 0);
@@ -1192,7 +798,6 @@
         function renderStreamCard(stream) {
             const genderIcon = getGenderIcon(stream.gender);
             const ageBadge = stream.age ? '<span class="age-badge">' + stream.age + '</span>' : '';
-            const timeSlotsHtml = stream.timeSlots ? stream.timeSlots.map(slot => '<span class="stream-slot">' + slot + '</span>').join('') : '';
             return `
                 <div class="stream-card" onclick="showToast('Stream', 'Opening stream: ${stream.title}')">
                     <div class="stream-thumbnail">
@@ -1200,6 +805,7 @@
                         <div class="stream-overlay">
                             <div class="stream-badges">
                                 <span class="badge badge-live"><span class="live-dot"></span> LIVE</span>
+                                <span class="badge badge-viewers"><i class="fas fa-user"></i> ${(stream.viewers || 0).toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
@@ -1208,18 +814,15 @@
                             <div class="streamer-avatar">${stream.streamer.charAt(0)}</div>
                             <div class="streamer-meta">
                                 <div class="streamer-name">${stream.streamer} ${stream.verified ? '<i class="fas fa-check-circle verified"></i>' : ''}</div>
-                                <div class="streamer-details">${genderIcon} ${ageBadge} <span>${(stream.category || '').charAt(0).toUpperCase() + (stream.category || '').slice(1)}</span> <span style="color:var(--accent);font-size:12px;"><i class="fas fa-map-marker-alt" style="margin-right:3px;"></i>${stream.location || 'South Africa'}${stream.region ? ' &bull; ' + stream.region : ''}</span></div>
+                                <div class="streamer-details">${genderIcon} ${ageBadge} <span>${(stream.category || '').charAt(0).toUpperCase() + (stream.category || '').slice(1)}</span></div>
                             </div>
                         </div>
                         <div class="stream-title">${stream.title}</div>
-                        <div class="stream-timeslots">
-                            <div class="stream-slots-grid">${timeSlotsHtml}</div>
-                        </div>
                         <div class="stream-actions">
-                            <a href="https://instagram.com/${stream.streamer.toLowerCase().replace(/\s+/g, '')}" class="btn-action" target="_blank" onclick="event.stopPropagation()">
-                                <i class="fab fa-instagram"></i> Follow
-                            </a>
-                            <a href="https://wa.me/${stream.whatsapp}?text=Hi ${stream.streamer}! I found you on LiveFantasy. My unique code is: ${stream.uniqueCode}" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
+                            <button class="btn-action" onclick="event.stopPropagation(); showToast('Following', 'You are now following ${stream.streamer}!')">
+                                <i class="fas fa-heart"></i> Follow
+                            </button>
+                            <a href="https://wa.me/${stream.whatsapp}?text=Hi ${stream.streamer}! I found you on StreamConnect. My unique code is: ${stream.uniqueCode}" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
                                 <i class="fab fa-whatsapp"></i> Chat
                             </a>
                         </div>
@@ -1229,46 +832,19 @@
             `;
         }
 
-        // Active filters state
-        const activeFilters = {
-            home: { category: 'all', location: 'all', region: 'all' },
-            browse: { category: 'all', location: 'all', region: 'all' }
-        };
-
-        // Render streams with combined category + location + region filter
-        function renderStreams(containerId, filter, locationFilter, regionFilter) {
+        // Render streams
+        function renderStreams(containerId, filter) {
             filter = filter || 'all';
-            locationFilter = locationFilter || 'all';
-            regionFilter = regionFilter || 'all';
             const container = document.getElementById(containerId);
             if (!container) return;
-            let filtered = streams;
-            if (filter !== 'all') {
-                filtered = filtered.filter(s => s.category === filter);
-            }
-            if (locationFilter !== 'all') {
-                filtered = filtered.filter(s => s.location === locationFilter);
-            }
-            // Only filter by region if a specific region is selected (not 'all')
-            if (regionFilter !== 'all' && regionFilter !== '') {
-                filtered = filtered.filter(s => s.region === regionFilter);
-            }
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--text-muted);"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5;"></i><h3 style="font-size:20px;margin-bottom:8px;color:var(--text);">No models found</h3><p>Try adjusting your filters to see more results.</p></div>';
-                return;
-            }
-
+            const filtered = filter === 'all' ? streams : streams.filter(s => s.category === filter);
             container.innerHTML = filtered.map(renderStreamCard).join('');
         }
 
         // Filter function using event delegation - works with data attributes
-        function setupFilterButtons(containerId, targetGridId, renderFn, pageKey, locationSelectId, regionSelectId) {
+        function setupFilterButtons(containerId, targetGridId, renderFn) {
             const container = document.getElementById(containerId);
-            if (!container) {
-                console.error('Filter container not found:', containerId);
-                return;
-            }
+            if (!container) return;
 
             container.addEventListener('click', function(e) {
                 const btn = e.target.closest('.filter-tab');
@@ -1281,113 +857,8 @@
                 container.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 btn.classList.add('active');
 
-                // Update active filter state
-                if (pageKey) activeFilters[pageKey].category = category;
-
-                // Get current location and region filters
-                const locSelect = locationSelectId ? document.getElementById(locationSelectId) : null;
-                const location = locSelect ? (locSelect.value || 'all') : 'all';
-
-                const regSelect = regionSelectId ? document.getElementById(regionSelectId) : null;
-                let region = 'all';
-                if (regSelect && regSelect.offsetParent !== null && regSelect.value && regSelect.value !== 'all') {
-                    region = regSelect.value;
-                }
-
                 // Render filtered content
-                try {
-                    renderFn(targetGridId, category, location, region);
-                } catch (err) {
-                    console.error('Error rendering filtered content:', err);
-                }
-            });
-        }
-
-        // Setup location filter dropdown with cascading regions
-        function setupLocationFilter(selectId, targetGridId, renderFn, pageKey, tabContainerId, regionSelectId) {
-            const select = document.getElementById(selectId);
-            const regionSelect = regionSelectId ? document.getElementById(regionSelectId) : null;
-            if (!select) {
-                console.error('Location select not found:', selectId);
-                return;
-            }
-
-            select.addEventListener('change', function() {
-                const location = this.value;
-                if (pageKey) activeFilters[pageKey].location = location;
-
-                // Populate region dropdown and reset to 'all'
-                if (regionSelect) {
-                    populateRegionDropdown(regionSelect, location);
-                    if (pageKey) activeFilters[pageKey].region = 'all';
-                }
-
-                // Get current category from the active tab
-                const tabContainer = tabContainerId ? document.getElementById(tabContainerId) : null;
-                let category = 'all';
-                if (tabContainer) {
-                    const activeTab = tabContainer.querySelector('.filter-tab.active');
-                    if (activeTab) category = activeTab.getAttribute('data-cat') || 'all';
-                }
-
-                try {
-                    renderFn(targetGridId, category, location, 'all');
-                } catch (err) {
-                    console.error('Error rendering location-filtered content:', err);
-                }
-            });
-        }
-
-        // Populate region dropdown based on city
-        function populateRegionDropdown(regionSelect, city) {
-            if (!regionSelect) return;
-            regionSelect.innerHTML = '<option value="all" selected>All Areas</option>';
-            if (city === 'all' || !city) {
-                regionSelect.style.display = 'none';
-                return;
-            }
-            const regions = getRegionsForCity(city);
-            if (!regions || regions.length === 0) {
-                regionSelect.style.display = 'none';
-                return;
-            }
-            regions.forEach(region => {
-                const opt = document.createElement('option');
-                opt.value = region;
-                opt.textContent = region;
-                regionSelect.appendChild(opt);
-            });
-            regionSelect.style.display = 'inline-block';
-            regionSelect.value = 'all';
-        }
-
-        // Setup region filter dropdown
-        function setupRegionFilter(selectId, targetGridId, renderFn, pageKey, tabContainerId, locationSelectId) {
-            const select = document.getElementById(selectId);
-            if (!select) {
-                console.error('Region select not found:', selectId);
-                return;
-            }
-            select.addEventListener('change', function() {
-                const region = this.value || 'all';
-                if (pageKey) activeFilters[pageKey].region = region;
-
-                // Get current category from the active tab
-                const tabContainer = tabContainerId ? document.getElementById(tabContainerId) : null;
-                let category = 'all';
-                if (tabContainer) {
-                    const activeTab = tabContainer.querySelector('.filter-tab.active');
-                    if (activeTab) category = activeTab.getAttribute('data-cat') || 'all';
-                }
-
-                const locSelect = locationSelectId ? document.getElementById(locationSelectId) : null;
-                const location = locSelect ? (locSelect.value || 'all') : 'all';
-
-                try {
-                    renderFn(targetGridId, category, location, region);
-                } catch (err) {
-                    console.error('Error rendering region-filtered content:', err);
-                }
+                renderFn(targetGridId, category);
             });
         }
 
@@ -1417,16 +888,10 @@
                             </div>
                         </div>
                         <div class="profile-card-bio">${profile.bio}</div>
-                        <div class="profile-card-timeslots">
-                            <h4><i class="fas fa-clock" style="color: var(--primary); margin-right: 6px;"></i>Available Hours</h4>
-                            <div class="profile-slots-grid">
-                                ${(profile.timeSlots || []).map(slot => `<span class="profile-slot">${slot}</span>`).join('')}
-                            </div>
-                        </div>
                         <div class="profile-card-tags">
                             ${profile.tags.map(tag => `<span class="profile-tag">${tag}</span>`).join('')}
                         </div>
-                        <a href="https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy and would love to live chat with you." class="btn-live-chat" target="_blank">
+                        <a href="https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on StreamConnect and would love to live chat with you." class="btn-live-chat" target="_blank">
                             <i class="fab fa-whatsapp"></i> Live Chat
                         </a>
                     </div>
@@ -1438,8 +903,9 @@
         const galleryStates = {};
 
         function initGallery(galleryId, totalSlides) {
-            // Always reset/ensure gallery state is correct for this render
-            galleryStates[galleryId] = { current: 0, total: totalSlides };
+            if (!galleryStates[galleryId]) {
+                galleryStates[galleryId] = { current: 0, total: totalSlides };
+            }
         }
 
         function updateGallery(galleryId) {
@@ -1447,15 +913,15 @@
             if (!state) return;
 
             const slides = document.getElementById(galleryId + '-slides');
-            if (slides) {
-                slides.style.transform = 'translateX(-' + (state.current * 100) + '%)';
-            }
+            if (slides) slides.style.transform = 'translateX(-' + (state.current * 100) + '%)';
 
-            // Update dots - find all dots with matching data-gallery
-            const allDots = document.querySelectorAll('.gallery-dot[data-gallery="' + galleryId + '"]');
-            allDots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === state.current);
-            });
+            // Update dots
+            const card = slides ? slides.closest('.profile-card') : null;
+            if (card) {
+                card.querySelectorAll('.gallery-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === state.current);
+                });
+            }
         }
 
         function nextSlide(galleryId) {
@@ -1506,39 +972,16 @@
             });
         }
 
-        // Render profiles - accepts same 4-arg signature as renderStreams for consistency
-        function renderProfiles(containerId, filter, locationFilter, regionFilter) {
+        // Render profiles
+        function renderProfiles(filter) {
             filter = filter || 'all';
-            const container = document.getElementById(containerId || 'profilesGrid');
-            if (!container) {
-                console.error('profilesGrid container not found');
-                return;
-            }
-            if (typeof profiles === 'undefined') {
-                console.error('profiles array is undefined');
-                return;
-            }
+            const container = document.getElementById('profilesGrid');
+            if (!container) return;
             const filtered = filter === 'all' ? profiles : profiles.filter(p => p.category === filter);
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--text-muted);"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5;"></i><h3 style="font-size:20px;margin-bottom:8px;color:var(--text);">No profiles found</h3><p>Try a different filter to see more results.</p></div>';
-                return;
-            }
-
-            let html = '';
-            for (let i = 0; i < filtered.length; i++) {
-                try {
-                    html += renderProfileCard(filtered[i]);
-                } catch (e) {
-                    console.error('Error rendering profile', filtered[i].id, e);
-                }
-            }
-            container.innerHTML = html;
-            // Reset gallery states and re-initialize
+            container.innerHTML = filtered.map(renderProfileCard).join('');
+            // Initialize galleries
             filtered.forEach(p => {
-                const galleryId = 'gallery-' + p.id;
-                galleryStates[galleryId] = { current: 0, total: p.gallery.length };
-                updateGallery(galleryId);
+                initGallery('gallery-' + p.id, p.gallery.length);
             });
         }
 
@@ -1571,7 +1014,7 @@
                             <div class="period">${room.period}</div>
                         </div>
                         <a href="https://wa.me/${room.whatsapp}?text=${encodeURIComponent(room.message)}" class="btn-live-chat" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Book Slot
+                            <i class="fab fa-whatsapp"></i> Request to Join Group
                         </a>
                     </div>
                 </div>
@@ -1581,122 +1024,37 @@
         // Registration form handler
         function handleJoinSubmit(e) {
             e.preventDefault();
-            const username = document.getElementById('regUsername').value;
             const age = document.getElementById('regAge').value;
             const type = document.getElementById('regType').value;
             const ethnicity = document.getElementById('regEthnicity').value;
             const country = document.getElementById('regCountry').value;
             const bio = document.getElementById('regBio').value;
-            const linkups = document.getElementById('regLinkups').checked;
-            const city = document.getElementById('regCity') ? document.getElementById('regCity').value : '';
-            const suburb = document.getElementById('regSuburb') ? document.getElementById('regSuburb').value : '';
 
-            // Get selected tags
-            const selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value).join(', ');
+            const message = `Hi! I want to join StreamConnect. Here are my details:
 
-            // Get selected time slots
-            const selectedSlots = Array.from(document.querySelectorAll('input[name="timeslots"]:checked')).map(cb => {
-                const parts = cb.value.split('-');
-                const day = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
-                const time = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
-                return day + ' ' + time;
-            }).join(', ');
-
-            const message = `Hi! I want to join LiveFantasy. Here are my details:
-
-Username: ${username}
 Age: ${age}
 Type: ${type}
 Ethnicity: ${ethnicity}
 Country: ${country}
-Tags: ${selectedTags || 'None selected'}
-Available Time Slots: ${selectedSlots || 'None selected'}
-Also listed for Linkups: ${linkups ? 'Yes' : 'No'}
-${linkups && city ? 'Linkups City: ' + city : ''}
-${linkups && suburb ? 'Linkups Area: ' + suburb : ''}
 Bio: ${bio}
 
 Please send me the next steps to complete my registration.`;
 
-            window.open('https://wa.me/27812797778?text=' + encodeURIComponent(message), '_blank');
+            window.open('https://wa.me/270812797778?text=' + encodeURIComponent(message), '_blank');
         }
 
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
-            // Linkups checkbox toggle with cascading city -> suburb
-            const linkupsCheckbox = document.getElementById('regLinkups');
-            const regionGroup = document.getElementById('regionGroup');
-            const suburbGroup = document.getElementById('suburbGroup');
-            const regCity = document.getElementById('regCity');
-            const regSuburb = document.getElementById('regSuburb');
-
-            if (linkupsCheckbox && regionGroup) {
-                linkupsCheckbox.addEventListener('change', function() {
-                    regionGroup.style.display = this.checked ? 'block' : 'none';
-                    if (!this.checked && suburbGroup) suburbGroup.style.display = 'none';
-                });
-            }
-
-            if (regCity && regSuburb && suburbGroup) {
-                regCity.addEventListener('change', function() {
-                    const city = this.value;
-                    regSuburb.innerHTML = '<option value="">Select your area</option>';
-                    if (!city) {
-                        suburbGroup.style.display = 'none';
-                        return;
-                    }
-                    const suburbs = getRegionsForCity(city);
-                    suburbs.forEach(sub => {
-                        const opt = document.createElement('option');
-                        opt.value = sub;
-                        opt.textContent = sub;
-                        regSuburb.appendChild(opt);
-                    });
-                    suburbGroup.style.display = 'block';
-                });
-            }
-
-            // Mobile menu toggle
-            const navToggle = document.getElementById('navToggle');
-            const navLinks = document.getElementById('navLinks');
-            if (navToggle && navLinks) {
-                navToggle.addEventListener('click', () => {
-                    navLinks.classList.toggle('open');
-                    const icon = navToggle.querySelector('i');
-                    if (icon) {
-                        icon.classList.toggle('fa-bars');
-                        icon.classList.toggle('fa-times');
-                    }
-                });
-                // Close menu when a link is clicked
-                navLinks.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('open');
-                        const icon = navToggle.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-times');
-                            icon.classList.add('fa-bars');
-                        }
-                    });
-                });
-            }
-
             // Render all grids
-            renderStreams('streamsGrid', 'all', 'all', 'all');
-            renderStreams('browseGrid', 'all', 'all', 'all');
-            renderProfiles('profilesGrid', 'all', 'all', 'all');
+            renderStreams('streamsGrid');
+            renderStreams('browseGrid');
+            renderProfiles();
             renderRooms();
 
             // Setup filter buttons with event delegation
-            setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams, 'home', 'homeLocationFilter', 'homeRegionFilter');
-            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams, 'browse', 'browseLocationFilter', 'browseRegionFilter');
+            setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams);
+            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams);
             setupFilterButtons('profilesFilterTabs', 'profilesGrid', renderProfiles);
-
-            // Setup location and region filters
-            setupLocationFilter('homeLocationFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeRegionFilter');
-            setupLocationFilter('browseLocationFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseRegionFilter');
-            setupRegionFilter('homeRegionFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeLocationFilter');
-            setupRegionFilter('browseRegionFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseLocationFilter');
 
             // Setup gallery controls
             setupGalleryControls();

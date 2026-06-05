@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Fantasy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --card: #1e293b;
+            --card-hover: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .disclaimer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px);
+            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            padding: 20px; transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .disclaimer-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .disclaimer-modal {
+            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+            max-width: 600px; width: 100%; padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: modalSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalSlide {
+            from { transform: translateY(40px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .disclaimer-header { text-align: center; margin-bottom: 24px; }
+        .disclaimer-icon {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, var(--warning), #f97316);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 28px; color: white;
+        }
+        .disclaimer-header h2 { font-size: 24px; font-weight: 700; color: var(--text); }
+        .disclaimer-content { color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; font-size: 14px; }
+        .disclaimer-content ul { margin: 12px 0 12px 20px; }
+        .disclaimer-content li { margin-bottom: 8px; }
+
+        .disclaimer-checkbox {
+            display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px;
+            padding: 16px; background: rgba(99, 102, 241, 0.1); border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .disclaimer-checkbox input[type="checkbox"] {
+            width: 20px; height: 20px; accent-color: var(--primary); margin-top: 2px; cursor: pointer;
+        }
+        .disclaimer-checkbox label { font-size: 14px; color: var(--text); cursor: pointer; line-height: 1.5; }
+
+        .btn-primary {
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
+        }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 0 24px;
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .logo i { font-size: 28px; -webkit-text-fill-color: var(--primary); }
+
+        .nav-links { display: flex; align-items: center; gap: 8px; }
+        .nav-link {
+            padding: 8px 16px; border-radius: 8px; color: var(--text-muted);
+            text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: all 0.3s ease; cursor: pointer; border: none; background: none; font-family: inherit;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(99, 102, 241, 0.1); }
+        .nav-link.active { color: var(--primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .btn-whatsapp-nav {
+            padding: 8px 20px; background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .btn-whatsapp-nav:hover { transform: scale(1.05); box-shadow: 0 8px 20px -8px rgba(37, 211, 102, 0.4); }
+
+        .btn-live-chat-nav {
+            padding: 8px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: all 0.3s ease; animation: pulse 2s infinite;
+        }
+        .btn-live-chat-nav:hover { transform: scale(1.05); }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+        }
+
+        .main-content { margin-top: 64px; min-height: calc(100vh - 64px); }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            padding: 80px 24px; text-align: center; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+            background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 100px; font-size: 13px; color: var(--primary); font-weight: 500; margin-bottom: 24px;
+        }
+        .hero-badge .live-dot { width: 8px; height: 8px; background: var(--danger); border-radius: 50%; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero h1 {
+            font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-large {
+            padding: 14px 32px; border-radius: 12px; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 8px; border: none; font-family: inherit;
+        }
+        .btn-large.primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .btn-large.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5); }
+        .btn-large.secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+        .btn-large.secondary:hover { background: var(--card-hover); border-color: var(--primary); }
+        .btn-large.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color: white; }
+        .btn-large.whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.5); }
+        .btn-large.join { background: linear-gradient(135deg, var(--accent), #0891b2); color: white; }
+        .btn-large.join:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.5); }
+
+        .stats-bar { display: flex; justify-content: center; gap: 48px; padding: 32px 24px; background: var(--dark); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .streams-section { padding: 48px 24px; max-width: 1400px; margin: 0 auto; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .section-title { font-size: 24px; font-weight: 700; }
+        .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-tab {
+            padding: 8px 16px; border-radius: 8px; background: var(--card); border: 1px solid var(--border);
+            color: var(--text-muted); font-size: 13px; font-weight: 500; cursor: pointer;
+            transition: all 0.3s ease; font-family: inherit;
+        }
+        .filter-tab:hover, .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .streams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .stream-card {
+            background: var(--card); border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--border); transition: all 0.3s ease; cursor: pointer;
+        }
+        .stream-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2); }
+        .stream-thumbnail { position: relative; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--dark), var(--card)); overflow: hidden; }
+        .stream-thumbnail img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .stream-card:hover .stream-thumbnail img { transform: scale(1.05); }
+        .stream-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: space-between; padding: 12px; }
+        .stream-badges { display: flex; gap: 8px; }
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .badge-live { background: var(--danger); color: white; animation: pulse 2s infinite; }
+        .badge-viewers { background: rgba(0, 0, 0, 0.6); color: white; backdrop-filter: blur(4px); }
+        .stream-info { padding: 16px; }
+        .streamer-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .streamer-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        .streamer-meta { flex: 1; min-width: 0; }
+        .streamer-name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .verified { color: var(--primary); font-size: 14px; }
+        .streamer-details { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+        .gender-sign { font-size: 14px; }
+        .gender-female { color: var(--secondary); }
+        .gender-male { color: var(--accent); }
+        .age-badge { background: rgba(99, 102, 241, 0.2); color: var(--primary); padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .stream-title { font-size: 14px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .stream-actions { display: flex; gap: 8px; }
+        .btn-action {
+            flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--dark); color: var(--text); font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit;
+        }
+        .btn-action:hover { background: var(--card-hover); border-color: var(--primary); }
+        .btn-whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color: white; border: none; }
+        .btn-whatsapp:hover { background: linear-gradient(135deg, #22c55e, #0d9488); transform: scale(1.02); }
+        .unique-id { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 6px; font-family: 'Courier New', monospace; letter-spacing: 0.5px; }
+
+        /* Profile Cards with Gallery */
+        .profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-top: 24px; }
+        .profile-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; }
+        .profile-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2); }
+        .profile-gallery { position: relative; height: 220px; overflow: hidden; background: var(--dark); }
+        .gallery-slides { display: flex; transition: transform 0.5s ease; height: 100%; }
+        .gallery-slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .gallery-nav { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 2; }
+        .gallery-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease; }
+        .gallery-dot.active { background: white; width: 24px; border-radius: 4px; }
+        .gallery-arrows { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 12px; z-index: 2; }
+        .gallery-arrow { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.3s ease; }
+        .gallery-arrow:hover { background: rgba(0,0,0,0.8); }
+        .profile-card-body { padding: 20px; }
+        .profile-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .profile-card-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; flex-shrink: 0; }
+        .profile-card-info h3 { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+        .profile-card-info p { font-size: 13px; color: var(--text-muted); }
+        .profile-card-bio { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .profile-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+        .profile-tag { padding: 4px 10px; background: rgba(99, 102, 241, 0.15); border-radius: 100px; font-size: 11px; color: var(--primary); font-weight: 500; }
+        .btn-live-chat {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .btn-live-chat:hover { transform: scale(1.02); box-shadow: 0 8px 20px -8px rgba(37, 211, 102, 0.4); }
+
+        /* Live Rooms */
+        .rooms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; margin-top: 24px; }
+        .room-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; }
+        .room-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2); }
+        .room-header { padding: 24px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); text-align: center; }
+        .room-header h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+        .room-header p { font-size: 14px; opacity: 0.9; }
+        .room-body { padding: 24px; }
+        .room-bio { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        .room-features { margin-bottom: 20px; }
+        .room-features h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+        .room-features ul { list-style: none; }
+        .room-features li { font-size: 13px; color: var(--text-muted); padding: 4px 0; display: flex; align-items: center; gap: 8px; }
+        .room-features li i { color: var(--success); font-size: 12px; }
+        .time-slots { margin-bottom: 20px; }
+        .time-slots h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+        .slot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .time-slot { padding: 8px 12px; background: var(--dark); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text-muted); text-align: center; }
+        .time-slot.active { background: rgba(99, 102, 241, 0.15); border-color: var(--primary); color: var(--primary); font-weight: 600; }
+        .room-price { text-align: center; margin-bottom: 16px; }
+        .room-price .price { font-size: 32px; font-weight: 800; color: var(--primary); }
+        .room-price .period { font-size: 13px; color: var(--text-muted); }
+
+        /* Registration */
+        .registration-container { max-width: 600px; margin: 0 auto; padding: 48px 24px; }
+        .registration-header { text-align: center; margin-bottom: 32px; }
+        .registration-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .registration-header p { color: var(--text-muted); }
+        .registration-form { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--text); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 16px; background: var(--dark); border: 1px solid var(--border);
+            border-radius: 10px; color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-notice {
+            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 10px; padding: 16px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px;
+        }
+        .form-notice i { color: var(--warning); font-size: 18px; margin-top: 2px; }
+        .form-notice p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .pricing-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 20px;
+            text-align: center; margin-bottom: 24px;
+        }
+        .pricing-box .original { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
+        .pricing-box .discounted { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .pricing-box .note { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5); z-index: 9999;
+            transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 16px; }
+        .toast-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .toast-content p { font-size: 13px; color: var(--text-muted); }
+
+        /* Tags Checkbox Group */
+        .tags-checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 12px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .tag-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .tag-checkbox:hover { background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3); }
+        .tag-checkbox input[type="checkbox"] {
+            width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;
+        }
+
+        /* Time Slots Group */
+        .time-slots-group {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .time-slot-day {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .time-slot-day:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .day-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .day-slots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+        .slot-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 8px;
+            background: rgba(99, 102, 241, 0.06);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .slot-checkbox:hover { background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.2); color: var(--text); }
+        .slot-checkbox input[type="checkbox"] {
+            width: 14px; height: 14px; accent-color: var(--primary); cursor: pointer;
+        }
+
+        /* Stream Card Time Slots */
+        .stream-timeslots {
+            margin-bottom: 10px;
+        }
+        .stream-slots-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .stream-slot {
+            padding: 3px 8px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 100px;
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Profile Card Time Slots */
+        .profile-card-timeslots {
+            margin-bottom: 14px;
+        }
+        .profile-card-timeslots h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-slots-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .profile-slot {
+            padding: 4px 10px;
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .streams-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 24px; }
+            .nav-links { display: none; }
+            .disclaimer-modal { padding: 24px; }
+            .profiles-grid { grid-template-columns: 1fr; }
+            .rooms-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .slot-grid { grid-template-columns: 1fr; }
+            .tags-checkbox-group { grid-template-columns: repeat(2, 1fr); }
+            .day-slots { grid-template-columns: 1fr; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--card-hover); }
+    </style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-video"></i> LiveFantasy</div>
+            <div class="nav-links">
+                <button class="nav-link active" onclick="showPage('home')"><i class="fas fa-home" style="margin-right:6px"></i>Home</button>
+                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Models</button>
+                <button class="nav-link" onclick="showPage('profiles')"><i class="fas fa-users" style="margin-right:6px"></i>Profiles</button>
+                <button class="nav-link" onclick="showPage('live-rooms')"><i class="fas fa-door-open" style="margin-right:6px"></i>Playhouse</button>
+            </div>
+            <div class="nav-actions">
+                <a href="https://wa.me/27123456789?text=Hi! I'm interested in LiveFantasy." class="btn-whatsapp-nav" target="_blank"><i class="fab fa-whatsapp"></i>Register</a>
+                <button class="btn-live-chat-nav" onclick="showToast('Live Chat','Live chat feature coming soon!')"><i class="fas fa-comments"></i> Live Chat</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div class="page active" id="page-home">
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge"><span class="live-dot"></span>Incoming video call</div>
+                    <h1>Private Video Chats<br>connect with horny models</h1>
+                    <p>For your personal pleasure!</p>
+                    <div class="hero-buttons">
+                        <button class="btn-large join" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Join Now</button>
+                        <a href="https://wa.me/27123456789?text=Hi! I'm interested in LiveFantasy." class="btn-large whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="stats-bar">
+                <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">New Models</div></div>
+                <div class="stat-item"><div class="stat-value">53+</div><div class="stat-label">Weekly Chats</div></div>
+                <div class="stat-item" style="display: none;"><div class="stat-value">9</div><div class="stat-label">African Countries</div></div>
+            </div>
+
+            <section class="streams-section">
+                <div class="section-header">
+                    <h2 class="section-title">Top Models</h2>
+                    <div class="filter-tabs" id="homeFilterTabs">
+                        <button class="filter-tab active" data-cat="all">All</button>
+                        <button class="filter-tab" data-cat="young">Young</button>
+                        <button class="filter-tab" data-cat="mature">Mature</button>
+                        <button class="filter-tab" data-cat="milf">Milf</button>
+                        <button class="filter-tab" data-cat="slim">Slim/petite</button>
+                        <button class="filter-tab" data-cat="bbw">BBW</button>
+                        <button class="filter-tab" data-cat="thick">Thick</button>
+                        <button class="filter-tab" data-cat="toys">Toys</button>
+                        <button class="filter-tab" data-cat="ebony">Ebony</button>
+                        <button class="filter-tab" data-cat="coloured">Coloured</button>
+                        <button class="filter-tab" data-cat="indian">Indian</button>
+                        <button class="filter-tab" data-cat="fit">Fit</button>
+                        <button class="filter-tab" data-cat="submissive">Submissive</button>
+                        <button class="filter-tab" data-cat="play">Role Play</button>
+                        <button class="filter-tab" data-cat="busty">Busty</button>
+                        <button class="filter-tab" data-cat="joi">JOI</button>
+                    </div>
+                </div>
+                <div class="streams-grid" id="streamsGrid"></div>
+            </section>
+        </div>
+
+        <!-- Browse Page -->
+        <div class="page" id="page-browse">
+            <section class="streams-section" style="padding-top: 32px;">
+                <div class="section-header">
+                    <h2 class="section-title">All Models</h2>
+                    <div class="filter-tabs" id="browseFilterTabs">
+                        <button class="filter-tab active" data-cat="all">All</button>
+                        <button class="filter-tab" data-cat="young">Young</button>
+                        <button class="filter-tab" data-cat="mature">Mature</button>
+                        <button class="filter-tab" data-cat="milf">Milf</button>
+                        <button class="filter-tab" data-cat="slim">Slim/petite</button>
+                        <button class="filter-tab" data-cat="bbw">BBW</button>
+                        <button class="filter-tab" data-cat="thick">Thick</button>
+                        <button class="filter-tab" data-cat="toys">Toys</button>
+                        <button class="filter-tab" data-cat="ebony">Ebony</button>
+                        <button class="filter-tab" data-cat="coloured">Coloured</button>
+                        <button class="filter-tab" data-cat="indian">Indian</button>
+                        <button class="filter-tab" data-cat="fit">Fit</button>
+                        <button class="filter-tab" data-cat="submissive">Submissive</button>
+                        <button class="filter-tab" data-cat="play">Role Play</button>
+                        <button class="filter-tab" data-cat="busty">Busty</button>
+                        <button class="filter-tab" data-cat="joi">JOI</button>
+                    </div>
+                </div>
+                <div class="streams-grid" id="browseGrid"></div>
+            </section>
+        </div>
+
+        <!-- Profiles Page -->
+        <div class="page" id="page-profiles">
+            <section class="streams-section" style="padding-top: 32px;">
+                <div class="section-header">
+                    <h2 class="section-title">Be A Model</h2>
+                    <div class="filter-tabs" id="profilesFilterTabs">
+                        <button class="filter-tab active" data-cat="all">All</button>
+                        <button class="filter-tab" data-cat="young">Young</button>
+                        <button class="filter-tab" data-cat="mature">Mature</button>
+                        <button class="filter-tab" data-cat="milf">Milf</button>
+                        <button class="filter-tab" data-cat="slim">Slim/petite</button>
+                        <button class="filter-tab" data-cat="bbw">BBW</button>
+                        <button class="filter-tab" data-cat="thick">Thick</button>
+                        <button class="filter-tab" data-cat="toys">Toys</button>
+                        <button class="filter-tab" data-cat="ebony">Ebony</button>
+                        <button class="filter-tab" data-cat="coloured">Coloured</button>
+                        <button class="filter-tab" data-cat="indian">Indian</button>
+                        <button class="filter-tab" data-cat="fit">Fit</button>
+                        <button class="filter-tab" data-cat="submissive">Submissive</button>
+                        <button class="filter-tab" data-cat="play">Role Play</button>
+                        <button class="filter-tab" data-cat="busty">Busty</button>
+                        <button class="filter-tab" data-cat="joi">JOI</button>
+                    </div>
+                </div>
+                <div class="profiles-grid" id="profilesGrid"></div>
+            </section>
+        </div>
+
+        <!-- Live Rooms Page -->
+        <div class="page" id="page-live-rooms">
+            <section class="streams-section" style="padding-top: 32px;">
+                <div class="section-header">
+                    <h2 class="section-title">Come Visit Our Playhouse For Unlimited Pleasure</h2>
+                    <p style="color: var(--text-muted); font-size: 14px;">Limited slots avaliable, book your slot!</p>
+                </div>
+                <div class="rooms-grid" id="roomsGrid"></div>
+            </section>
+        </div>
+
+        <!-- Registration Page -->
+        <div class="page" id="page-register">
+            <div class="registration-container">
+                <div class="registration-header">
+                    <h1>Join LiveFantasy</h1>
+                    <p>Create your account and start making money today</p>
+                </div>
+                <div class="registration-form">
+                    <div class="form-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <p>After submitting this form, you will be redirected to WhatsApp to complete your registration with additional required information (Video verification and profile photos).</p>
+                    </div>
+                    <div class="pricing-box">
+                        <div class="original">R450/month</div>
+                        <div class="discounted">R350 2 Months Signup Promo</div>
+                        <div class="note">Special offer: Save R550 on your first two months!</div>
+                    </div>
+                    <form id="joinForm" onsubmit="handleJoinSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regUsername">Username</label>
+                                <input type="text" id="regUsername" name="username" required placeholder="Choose a username">
+                            </div>
+                            <div class="form-group">
+                                <label for="regAge">Age</label>
+                                <input type="number" id="regAge" name="age" min="18" max="100" required placeholder="Your age">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regType">Type</label>
+                                <select id="regType" name="type" required>
+                                    <option value="">Select type</option>
+                                    <option value="slim">Slim/petite</option>
+                                    <option value="bbw">BBW</option>
+                                    <option value="fit">Fit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="regEthnicity">Ethnicity</label>
+                                <select id="regEthnicity" name="ethnicity" required>
+                                    <option value="">Select ethnicity</option>
+                                    <option value="asian">Asian</option>
+                                    <option value="black">Black</option>
+                                    <option value="coloured">Coloured</option>
+                                    <option value="white">White</option>
+                                    <option value="mixed">Mixed</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regCountry">Country</label>
+                            <select id="regCountry" name="country" required>
+                                <option value="">Select country</option>
+                                <option value="za">South Africa</option>
+                                <option value="ls">Lesotho</option>
+                                <option value="na">Namibia</option>
+                                <option value="ng">Nigeria</option>
+                                <option value="ke">Kenya</option>
+                                <option value="et">Ethiopia</option>
+                                <option value="gh">Ghana</option>
+                                <option value="mz">Mozambique</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="zw">Zimbabwe</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags (Select all that apply)</label>
+                            <div class="tags-checkbox-group">
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="young"> Young</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="mature"> Mature</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="milf"> Milf</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="slim"> Slim/petite</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="bbw"> BBW</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="thick"> Thick</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="toys"> Toys</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="ebony"> Ebony</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="coloured"> Coloured</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="indian"> Indian</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="fit"> Fit</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="submissive"> Submissive</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="play"> Role Play</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="busty"> Busty</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="joi"> JOI</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Available Time Slots</label>
+                            <div class="time-slots-group">
+                                <div class="time-slot-day">
+                                    <label class="day-label">Monday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="mon-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Tuesday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="tue-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Wednesday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="wed-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Thursday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="thu-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Friday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="fri-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Saturday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sat-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                                <div class="time-slot-day">
+                                    <label class="day-label">Sunday</label>
+                                    <div class="day-slots">
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-morning"> Morning (08:00-12:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-afternoon"> Afternoon (12:00-18:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-evening"> Evening (18:00-00:00)</label>
+                                        <label class="slot-checkbox"><input type="checkbox" name="timeslots" value="sun-night"> Night (00:00-08:00)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regBio">Bio</label>
+                            <textarea id="regBio" name="bio" required placeholder="Tell us about yourself for your profile bio"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="margin-top: 8px;">
+                            <i class="fab fa-whatsapp"></i> Complete Registration
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-icon"><i class="fas fa-info-circle"></i></div>
+        <div class="toast-content"><h4 id="toastTitle">Notification</h4><p id="toastMessage">Message here</p></div>
+    </div>
+
+    <script>
+        // Stream data with gender and age fields
+        const streams = [
+            { id: 1, title: "Come have a sensual experience with a feisty babe", streamer: "Snowdrop", age: 25, gender: "female", category: "ebony", thumbnail: "https://i.ibb.co/DHczXtmV/ID17b.jpg", verified: true, uniqueCode: "SC-SARA-9921", whatsapp: "+27765713720", timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"] },
+            { id: 2, title: "I am the girl next door with a naughty side", streamer: "Joii", age: 22, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/ccgXhNQD/ID16b.jpg", verified: true, uniqueCode: "SC-MIKE-4452", whatsapp: "+274113117159", timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"] },
+            { id: 3, title: "Hot sexy lady, very tiny and tight in all the right places.", streamer: "Abby", age: 21, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/5WgtQwGq/ID15d.jpg", verified: true, uniqueCode: "SC-LISA-7783", whatsapp: "+27123456791", timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"] },
+            { id: 4, title: "Feeling freaky? Seductive Red fox, open minded", streamer: "Crystal", age: 35, gender: "female", category: "coloured", thumbnail: "https://i.ibb.co/HfBkpSqn/ID12b.jpg", verified: false, uniqueCode: "SC-GAME-1124", whatsapp: "+27123456792", timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"] },
+            { id: 5, title: "Sexy slender erotic dream. Come see me", streamer: "Melinda", age: 29, gender: "female", category: "slim", thumbnail: "https://i.ibb.co/7xJXhZfm/ID5c.jpg", verified: true, uniqueCode: "SC-AMY-6655", whatsapp: "+27123456793", timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"] },
+            { id: 6, title: "Cute babe with curves in all the right places. Cum and play.", streamer: "Keisha", age: 23, gender: "female", category: "bbw", thumbnail: "https://i.ibb.co/TMgGh0gS/ID11b.jpg", verified: false, uniqueCode: "SC-CARL-3386", whatsapp: "+27123456794", timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"] },
+            { id: 7, title: "A curvy babe that will love for you to come and have some fun with her.", streamer: "Wendy", age: 31, gender: "female", category: "bbw", thumbnail: "https://i.ibb.co/R4HtCfdc/ID3c.jpg", verified: false, uniqueCode: "SC-STUD-5547", whatsapp: "+27123456795", timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"] },
+            { id: 8, title: "Very Curvaceous Babe! Curves in all the right places", streamer: "Zinhle", age: 26, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/QvxZhmfD/ID14b.jpg", verified: true, uniqueCode: "SC-FION-8878", whatsapp: "+27123456796", timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"] },
+            { id: 9, title: "With all the right curves in all the right places, come satisfy your desires", streamer: "Liza", age: 22, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/39ST11Br/ID1.jpg", verified: true, uniqueCode: "SC-PULS-9901", whatsapp: "+27123456797", timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"] },
+            { id: 10, title: "Hi there! I'm Mel", streamer: "Mel", age: 28, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/ynmXM2nV/ID4a.jpg", verified: false, uniqueCode: "SC-WAND-2202", whatsapp: "+27123456798", timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"] },
+            { id: 11, title: "A hot, busty, super sexy curvylicious honey that's home alone and waiting for you", streamer: "Kimberley", age: 28, gender: "female", category: "busty", thumbnail: "https://i.ibb.co/cXQkfNZT/ID9a.jpg", verified: true, uniqueCode: "SC-NINJ-3303", whatsapp: "+27123456799", timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"] },
+            { id: 12, title: "A hot honey for lots of fun. Ask about my greek specials", streamer: "Thato", age: 24, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/WpnDnv4L/ID6a.jpg", verified: true, uniqueCode: "SC-GINA-4404", whatsapp: "+27123456800", timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"] },
+            
+        ];
+
+        // Profile data with galleries, bios, and matching categories
+        const profiles = [
+            {
+                id: 1, name: "Snowdrop", handle: "@snowdrop", avatar: "SN", category: "ebony",
+                bio: "Feisty babe ready to give you a sensual experience you will never forget. Open-minded and always up for fun.",
+                tags: ["Ebony", "Sensual", "Open Minded", "Private Shows"],
+                timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"],
+                gallery: [
+                    "https://i.ibb.co/DHczXtmV/ID17b.jpg",
+                    "https://i.ibb.co/xqL6j0K3/ID17a.jpg"
+                ],
+                whatsapp: "+27765713720"
+            },
+            {
+                id: 2, name: "Joii", handle: "@joii", avatar: "JO", category: "slim",
+                bio: "The girl next door with a very naughty side. Slim, petite and ready to make your fantasies come true.",
+                tags: ["Slim", "Petite", "Girl Next Door", "Naughty"],
+                timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"],
+                gallery: [
+                    "https://i.ibb.co/ccgXhNQD/ID16b.jpg",
+                    "https://i.ibb.co/LT0SLHm/ID16a.jpg"
+                ],
+                whatsapp: "+274113117159"
+            },
+            {
+                id: 3, name: "Abby", handle: "@abby", avatar: "AB", category: "slim",
+                bio: "Hot, sexy and very tiny. Tight in all the right places and ready to show you a good time.",
+                tags: ["Slim", "Petite", "Sexy", "Tight"],
+                timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"],
+                gallery: [
+                    "https://i.ibb.co/5WgtQwGq/ID15d.jpg",
+                    "https://i.ibb.co/ccZ2Qdpx/ID15c.jpg"
+                ],
+                whatsapp: "+27123456791"
+            },
+            {
+                id: 4, name: "Crystal", handle: "@crystal", avatar: "CR", category: "coloured",
+                bio: "Seductive red fox with an open mind. Feeling freaky? Come play with me and let's explore together.",
+                tags: ["Coloured", "Seductive", "Open Minded", "Freaky"],
+                timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"],
+                gallery: [
+                    "https://i.ibb.co/HfBkpSqn/ID12b.jpg",
+                    "https://i.ibb.co/35nYzNGK/ID12a.jpg"
+                ],
+                whatsapp: "+27123456792"
+            },
+            {
+                id: 5, name: "Melinda", handle: "@melinda", avatar: "ME", category: "slim",
+                bio: "Sexy slender erotic dream. Let me be your fantasy and give you the experience you have been craving.",
+                tags: ["Slim", "Erotic", "Fantasy", "Slender"],
+                timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"],
+                gallery: [
+                    "https://i.ibb.co/7xJXhZfm/ID5c.jpg",
+                    "https://i.ibb.co/0RCStN9c/ID5b.jpg",
+                    "https://i.ibb.co/Jw6GGXFf/ID5a.jpg"
+                ],
+                whatsapp: "+27123456793"
+            },
+            {
+                id: 6, name: "Keisha", handle: "@keisha", avatar: "KE", category: "bbw",
+                bio: "Cute babe with curves in all the right places. BBW beauty who loves to play and have fun with you.",
+                tags: ["BBW", "Curvy", "Cute", "Playful"],
+                timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"],
+                gallery: [
+                    "https://i.ibb.co/TMgGh0gS/ID11b.jpg",
+                    "https://i.ibb.co/bR6Cgmz6/ID11a.jpg"
+                ],
+                whatsapp: "+27123456794"
+            },
+            {
+                id: 7, name: "Wendy", handle: "@wendy", avatar: "WE", category: "bbw",
+                bio: "A curvy babe that would love for you to come have some fun with her. BBW with a big personality and even bigger heart.",
+                tags: ["BBW", "Curvy", "Fun", "Big Personality"],
+                timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"],
+                gallery: [
+                    "https://i.ibb.co/R4HtCfdc/ID3c.jpg",
+                    "https://i.ibb.co/Jj5YN7q9/ID3b.jpg"
+                ],
+                whatsapp: "+27123456795"
+            },
+            {
+                id: 8, name: "Zinhle", handle: "@zinhle", avatar: "ZI", category: "thick",
+                bio: "Very curvaceous babe with curves in all the right places. Thick and beautiful, ready to satisfy your desires.",
+                tags: ["Thick", "Curvaceous", "Beautiful", "Desires"],
+                timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"],
+                gallery: [
+                    "https://i.ibb.co/QvxZhmfD/ID14b.jpg",
+                    "https://i.ibb.co/5xwLsBb0/ID14c.jpg",
+                    "https://i.ibb.co/q3JWbjGs/ID14a.jpg"
+                ],
+                whatsapp: "+27123456796"
+            },
+            {
+                id: 9, name: "Liza", handle: "@liza", avatar: "LI", category: "thick",
+                bio: "With all the right curves in all the right places. Come satisfy your desires with this thick beauty.",
+                tags: ["Thick", "Curvy", "Satisfying", "Desires"],
+                timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"],
+                gallery: [
+                    "https://i.ibb.co/39ST11Br/ID1.jpg",
+                    "https://i.ibb.co/Mk6DJZy4/ID1b.jpg"
+                ],
+                whatsapp: "+27123456797"
+            },
+            {
+                id: 10, name: "Mel", handle: "@mel", avatar: "ML", category: "mature",
+                bio: "Experienced mature lady who knows exactly what you need. Let me take care of you in ways you have only dreamed of.",
+                tags: ["Mature", "Experienced", "Caring", "Dreams"],
+                timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"],
+                gallery: [
+                    "https://i.ibb.co/ynmXM2nV/ID4a.jpg"
+                ],
+                whatsapp: "+27123456798"
+            },
+            {
+                id: 11, name: "Kimberley", handle: "@kimberley", avatar: "KI", category: "busty",
+                bio: "Hot, busty, super sexy curvylicious honey that is home alone and waiting just for you. Do not keep me waiting.",
+                tags: ["Busty", "Curvy", "Sexy", "Waiting"],
+                timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"],
+                gallery: [
+                    "https://i.ibb.co/cXQkfNZT/ID9a.jpg"
+                ],
+                whatsapp: "+27123456799"
+            },
+            {
+                id: 12, name: "Thato", handle: "@thato", avatar: "TH", category: "mature",
+                bio: "A hot honey for lots of fun. Ask about my special services. Mature and experienced in pleasing you.",
+                tags: ["Mature", "Fun", "Specials", "Experienced"],
+                timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"],
+                gallery: [
+                    "https://i.ibb.co/Ng4wpmxH/ID8a.jpg"
+                ],
+                whatsapp: "+27123456800"
+            }
+        ];
+
+        // Live Rooms data
+        const rooms = [
+            {
+                id: 1, name: "Pretoria Playhouse", subtitle: "2 Hour Session",
+                bio: "Join our guesthouse of pleasure.",
+                features: ["5 Women", "Secure Venue", "Private Rooms"],
+                slots: ["10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"],
+                price: "R450", period: "per Session",
+                whatsapp: "+270812797778",
+                message: "Hi! I'm interested in joining the Pretoria Playhouse package. Please send me more details."
+            },
+            {
+                id: 2, name: "Pretoria Playhouse", subtitle: "Full Night + Accommodation",
+                bio: "Our most popular package for growing creators. More streaming hours, priority support, and exclusive group chats with fellow streamers.",
+                features: ["Accommodation", "10 Women", "Secure Venue", "Private Rooms", "Transportation"],
+                slots: ["Friday 19:00-08:00", "Sat 19:00-08:00"],
+                price: "R950", period: "per Session",
+                whatsapp: "+270812797778",
+                message: "Hi! I'm interested in joining the Pretoria Playhouse package. Please send me more details."
+            },
+            {
+                id: 3, name: "Midrand Playhouse", subtitle: "2 Hour Session",
+                bio: "The ultimate day pleasure for those who want to have pleasure.",
+                features: [ "5 Women", "Secure Venue", "Private Rooms",],
+                slots: ["10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"],
+                price: "R450", period: "per Session",
+                whatsapp: "+270812797778",
+                message: "Hi! I'm interested in joining the Midrand Playhouse package. Please send me more details."
+            },
+                {
+                    id: 4, name: "Midrand Playhouse", subtitle: "Full Night Access + Accommodation",
+                    bio: "Full Night of fun with beautiful women for your pleasure.",
+                    features: ["Accommodation", "Parking", "Private Rooms", "Complementary Drinks", "Complementary Food", "Transportation"],
+                    slots: ["Friday 19:00-08:00", "Sat 19:00-08:00"],
+                    price: "R1000", period: "per Session",
+                    whatsapp: "+27812797778",
+                    message: "Hi! I'm interested in joining the Midrand Playhouse package. Please send me more details."
+                }
+
+        ];
+
+        
+        // Page navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+            const targetPage = document.getElementById('page-' + pageName);
+            if (targetPage) targetPage.classList.add('active');
+
+            // Update nav active state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const onclick = link.getAttribute('onclick');
+                if (onclick && onclick.includes("'" + pageName + "'")) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Re-render content when switching to specific pages
+            if (pageName === 'profiles') {
+                renderProfiles();
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Toast notification
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Gender icon helper
+        function getGenderIcon(gender) {
+            if (gender === 'female') return '<span class="gender-sign gender-female">&#9792;</span>';
+            if (gender === 'male') return '<span class="gender-sign gender-male">&#9794;</span>';
+            return '';
+        }
+
+        // Render stream cards - NO duration, with gender and age
+        function renderStreamCard(stream) {
+            const genderIcon = getGenderIcon(stream.gender);
+            const ageBadge = stream.age ? '<span class="age-badge">' + stream.age + '</span>' : '';
+            const timeSlotsHtml = stream.timeSlots ? stream.timeSlots.map(slot => '<span class="stream-slot">' + slot + '</span>').join('') : '';
+            return `
+                <div class="stream-card" onclick="showToast('Stream', 'Opening stream: ${stream.title}')">
+                    <div class="stream-thumbnail">
+                        <img src="${stream.thumbnail}" alt="${stream.title}" loading="lazy">
+                        <div class="stream-overlay">
+                            <div class="stream-badges">
+                                <span class="badge badge-live"><span class="live-dot"></span> LIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer-row">
+                            <div class="streamer-avatar">${stream.streamer.charAt(0)}</div>
+                            <div class="streamer-meta">
+                                <div class="streamer-name">${stream.streamer} ${stream.verified ? '<i class="fas fa-check-circle verified"></i>' : ''}</div>
+                                <div class="streamer-details">${genderIcon} ${ageBadge} <span>${(stream.category || '').charAt(0).toUpperCase() + (stream.category || '').slice(1)}</span></div>
+                            </div>
+                        </div>
+                        <div class="stream-title">${stream.title}</div>
+                        <div class="stream-timeslots">
+                            <div class="stream-slots-grid">${timeSlotsHtml}</div>
+                        </div>
+                        <div class="stream-actions">
+                            <a href="https://instagram.com/${stream.streamer.toLowerCase().replace(/\s+/g, '')}" class="btn-action" target="_blank" onclick="event.stopPropagation()">
+                                <i class="fab fa-instagram"></i> Follow
+                            </a>
+                            <a href="https://wa.me/${stream.whatsapp}?text=Hi ${stream.streamer}! I found you on LiveFantasy. My unique code is: ${stream.uniqueCode}" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
+                                <i class="fab fa-whatsapp"></i> Chat
+                            </a>
+                        </div>
+                        <div class="unique-id">${stream.uniqueCode}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render streams
+        function renderStreams(containerId, filter) {
+            filter = filter || 'all';
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const filtered = filter === 'all' ? streams : streams.filter(s => s.category === filter);
+            container.innerHTML = filtered.map(renderStreamCard).join('');
+        }
+
+        // Filter function using event delegation - works with data attributes
+        function setupFilterButtons(containerId, targetGridId, renderFn) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.addEventListener('click', function(e) {
+                const btn = e.target.closest('.filter-tab');
+                if (!btn) return;
+
+                const category = btn.getAttribute('data-cat');
+                if (!category) return;
+
+                // Update active state
+                container.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Render filtered content
+                renderFn(targetGridId, category);
+            });
+        }
+
+        // Render profile cards with gallery
+        function renderProfileCard(profile) {
+            const galleryId = 'gallery-' + profile.id;
+            return `
+                <div class="profile-card" data-category="${profile.category}">
+                    <div class="profile-gallery">
+                        <div class="gallery-slides" id="${galleryId}-slides">
+                            ${profile.gallery.map(img => `<div class="gallery-slide" style="background-image: url('${img}')"></div>`).join('')}
+                        </div>
+                        <div class="gallery-nav">
+                            ${profile.gallery.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-gallery="${galleryId}" data-slide="${i}"></div>`).join('')}
+                        </div>
+                        <div class="gallery-arrows">
+                            <button class="gallery-arrow" data-gallery="${galleryId}" data-dir="prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="gallery-arrow" data-gallery="${galleryId}" data-dir="next"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="profile-card-body">
+                        <div class="profile-card-header">
+                            <div class="profile-card-avatar">${profile.avatar}</div>
+                            <div class="profile-card-info">
+                                <h3>${profile.name}</h3>
+                                <p>${profile.handle}</p>
+                            </div>
+                        </div>
+                        <div class="profile-card-bio">${profile.bio}</div>
+                        <div class="profile-card-timeslots">
+                            <h4><i class="fas fa-clock" style="color: var(--primary); margin-right: 6px;"></i>Available Hours</h4>
+                            <div class="profile-slots-grid">
+                                ${(profile.timeSlots || []).map(slot => `<span class="profile-slot">${slot}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="profile-card-tags">
+                            ${profile.tags.map(tag => `<span class="profile-tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy and would love to live chat with you." class="btn-live-chat" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Live Chat
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gallery state management
+        const galleryStates = {};
+
+        function initGallery(galleryId, totalSlides) {
+            if (!galleryStates[galleryId]) {
+                galleryStates[galleryId] = { current: 0, total: totalSlides };
+            }
+        }
+
+        function updateGallery(galleryId) {
+            const state = galleryStates[galleryId];
+            if (!state) return;
+
+            const slides = document.getElementById(galleryId + '-slides');
+            if (slides) slides.style.transform = 'translateX(-' + (state.current * 100) + '%)';
+
+            // Update dots
+            const card = slides ? slides.closest('.profile-card') : null;
+            if (card) {
+                card.querySelectorAll('.gallery-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === state.current);
+                });
+            }
+        }
+
+        function nextSlide(galleryId) {
+            const state = galleryStates[galleryId];
+            if (!state) return;
+            state.current = (state.current + 1) % state.total;
+            updateGallery(galleryId);
+        }
+
+        function prevSlide(galleryId) {
+            const state = galleryStates[galleryId];
+            if (!state) return;
+            state.current = (state.current - 1 + state.total) % state.total;
+            updateGallery(galleryId);
+        }
+
+        function goToSlide(galleryId, index) {
+            const state = galleryStates[galleryId];
+            if (!state) return;
+            state.current = index;
+            updateGallery(galleryId);
+        }
+
+        // Setup gallery event delegation
+        function setupGalleryControls() {
+            document.addEventListener('click', function(e) {
+                // Handle dots
+                const dot = e.target.closest('.gallery-dot');
+                if (dot) {
+                    const galleryId = dot.getAttribute('data-gallery');
+                    const slideIndex = parseInt(dot.getAttribute('data-slide'));
+                    if (galleryId && !isNaN(slideIndex)) {
+                        goToSlide(galleryId, slideIndex);
+                    }
+                    return;
+                }
+
+                // Handle arrows
+                const arrow = e.target.closest('.gallery-arrow');
+                if (arrow) {
+                    const galleryId = arrow.getAttribute('data-gallery');
+                    const dir = arrow.getAttribute('data-dir');
+                    if (galleryId && dir) {
+                        if (dir === 'next') nextSlide(galleryId);
+                        else prevSlide(galleryId);
+                    }
+                }
+            });
+        }
+
+        // Render profiles
+        function renderProfiles(filter) {
+            filter = filter || 'all';
+            const container = document.getElementById('profilesGrid');
+            if (!container) {
+                console.error('profilesGrid container not found');
+                return;
+            }
+            if (typeof profiles === 'undefined') {
+                console.error('profiles array is undefined');
+                return;
+            }
+            const filtered = filter === 'all' ? profiles : profiles.filter(p => p.category === filter);
+            console.log('Rendering profiles, count:', filtered.length);
+            let html = '';
+            for (let i = 0; i < filtered.length; i++) {
+                try {
+                    html += renderProfileCard(filtered[i]);
+                } catch (e) {
+                    console.error('Error rendering profile', filtered[i].id, e);
+                }
+            }
+            container.innerHTML = html;
+            // Initialize galleries
+            filtered.forEach(p => {
+                initGallery('gallery-' + p.id, p.gallery.length);
+            });
+        }
+
+        // Render live rooms
+        function renderRooms() {
+            const container = document.getElementById('roomsGrid');
+            if (!container) return;
+            container.innerHTML = rooms.map(room => `
+                <div class="room-card">
+                    <div class="room-header">
+                        <h3>${room.name}</h3>
+                        <p>${room.subtitle}</p>
+                    </div>
+                    <div class="room-body">
+                        <div class="room-bio">${room.bio}</div>
+                        <div class="room-features">
+                            <h4><i class="fas fa-star" style="color: var(--warning); margin-right: 6px;"></i>What's Included</h4>
+                            <ul>
+                                ${room.features.map(f => '<li><i class="fas fa-check"></i> ' + f + '</li>').join('')}
+                            </ul>
+                        </div>
+                        <div class="time-slots">
+                            <h4><i class="fas fa-clock" style="color: var(--primary); margin-right: 6px;"></i>Available Time Slots</h4>
+                            <div class="slot-grid">
+                                ${room.slots.map((slot, i) => '<div class="time-slot ' + (i < 2 ? 'active' : '') + '">' + slot + '</div>').join('')}
+                            </div>
+                        </div>
+                        <div class="room-price">
+                            <div class="price">${room.price}</div>
+                            <div class="period">${room.period}</div>
+                        </div>
+                        <a href="https://wa.me/${room.whatsapp}?text=${encodeURIComponent(room.message)}" class="btn-live-chat" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Book Slot
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Registration form handler
+        function handleJoinSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value;
+            const age = document.getElementById('regAge').value;
+            const type = document.getElementById('regType').value;
+            const ethnicity = document.getElementById('regEthnicity').value;
+            const country = document.getElementById('regCountry').value;
+            const bio = document.getElementById('regBio').value;
+
+            // Get selected tags
+            const selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value).join(', ');
+
+            // Get selected time slots
+            const selectedSlots = Array.from(document.querySelectorAll('input[name="timeslots"]:checked')).map(cb => {
+                const parts = cb.value.split('-');
+                const day = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+                const time = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+                return day + ' ' + time;
+            }).join(', ');
+
+            const message = `Hi! I want to join StreamConnect. Here are my details:
+
+Username: ${username}
+Age: ${age}
+Type: ${type}
+Ethnicity: ${ethnicity}
+Country: ${country}
+Tags: ${selectedTags || 'None selected'}
+Available Time Slots: ${selectedSlots || 'None selected'}
+Bio: ${bio}
+
+Please send me the next steps to complete my registration.`;
+
+            window.open('https://wa.me/270812797778?text=' + encodeURIComponent(message), '_blank');
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render all grids
+            renderStreams('streamsGrid');
+            renderStreams('browseGrid');
+            renderProfiles();
+            renderRooms();
+
+            // Setup filter buttons with event delegation
+            setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams);
+            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams);
+            setupFilterButtons('profilesFilterTabs', 'profilesGrid', renderProfiles);
+
+            // Setup gallery controls
+            setupGalleryControls();
+        });
+    </script>
+</body>
+</html>

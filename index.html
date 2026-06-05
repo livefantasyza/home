@@ -94,6 +94,7 @@
         .nav-container {
             max-width: 1400px; margin: 0 auto;
             display: flex; align-items: center; justify-content: space-between; height: 64px;
+            position: relative;
         }
         .logo {
             display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800;
@@ -111,7 +112,8 @@
         .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(99, 102, 241, 0.1); }
         .nav-link.active { color: var(--primary); }
 
-        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .nav-actions { display: flex; align-items: center; gap: 12px; order: 2; }
+        .nav-toggle { order: 3; }
         .btn-whatsapp-nav {
             padding: 8px 20px; background: linear-gradient(135deg, #25d366, #128c7e);
             color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
@@ -192,6 +194,23 @@
             transition: all 0.3s ease; font-family: inherit;
         }
         .filter-tab:hover, .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .location-filter {
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+        .location-filter:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+        .location-filter option { background: var(--card); color: var(--text); }
 
         .streams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .stream-card {
@@ -460,6 +479,8 @@
             padding: 8px;
             border-radius: 8px;
             transition: all 0.3s ease;
+            margin-left: 8px;
+            order: 3;
         }
         .nav-toggle:hover { background: rgba(99, 102, 241, 0.15); }
 
@@ -502,13 +523,12 @@
                 width: 100%;
             }
             .nav-links .nav-link i { width: 24px; text-align: center; }
-            .nav-actions { gap: 8px; }
-            .btn-whatsapp-nav, .btn-live-chat-nav {
-                padding: 6px 12px;
+            .nav-actions { gap: 6px; order: 2; }
+            .btn-whatsapp-nav {
+                padding: 6px 10px;
                 font-size: 12px;
             }
-            .btn-whatsapp-nav span, .btn-live-chat-nav span { display: none; }
-            .btn-whatsapp-nav i, .btn-live-chat-nav i { margin: 0; }
+            .nav-toggle { order: 3; margin-left: 4px; }
         
             .hero h1 { font-size: 36px; }
             .streams-grid { grid-template-columns: 1fr; }
@@ -532,23 +552,23 @@
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo"><i class="fas fa-video"></i> LiveFantasy</div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
             <div class="nav-links" id="navLinks">
                 <button class="nav-link active" onclick="showPage('home')"><i class="fas fa-home" style="margin-right:6px"></i>Home</button>
-                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Models</button>
+                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Linkups</button>
                 <button class="nav-link" onclick="showPage('profiles')"><i class="fas fa-users" style="margin-right:6px"></i>Profiles</button>
                 <button class="nav-link" onclick="showPage('live-rooms')"><i class="fas fa-door-open" style="margin-right:6px"></i>Playhouse</button>
             </div>
             <div class="nav-actions">
                 <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-whatsapp-nav" target="_blank"><i class="fab fa-whatsapp"></i>Register</a>
-                <button class="btn-live-chat-nav" onclick="showToast('Live Chat','Live chat feature coming soon!')"><i class="fas fa-comments"></i> Live Chat</button>
             </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -577,7 +597,26 @@
             <section class="streams-section">
                 <div class="section-header">
                     <h2 class="section-title">Top Models</h2>
-                    <div class="filter-tabs" id="homeFilterTabs">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                        <select class="location-filter" id="homeLocationFilter">
+                            <option value="all">All Cities</option>
+                            <option value="Pretoria">Pretoria</option>
+                            <option value="Johannesburg">Johannesburg</option>
+                            <option value="Durban">Durban</option>
+                            <option value="Cape Town">Cape Town</option>
+                            <option value="Port Elizabeth">Port Elizabeth</option>
+                            <option value="Bloemfontein">Bloemfontein</option>
+                            <option value="Nelspruit">Nelspruit</option>
+                            <option value="Polokwane">Polokwane</option>
+                            <option value="Rustenburg">Rustenburg</option>
+                            <option value="Kimberley">Kimberley</option>
+                            <option value="East London">East London</option>
+                            <option value="Pietermaritzburg">Pietermaritzburg</option>
+                        </select>
+                        <select class="location-filter" id="homeRegionFilter" style="display:none;">
+                            <option value="all">All Areas</option>
+                        </select>
+                        <div class="filter-tabs" id="homeFilterTabs">
                         <button class="filter-tab active" data-cat="all">All</button>
                         <button class="filter-tab" data-cat="young">Young</button>
                         <button class="filter-tab" data-cat="mature">Mature</button>
@@ -595,6 +634,7 @@
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
                     </div>
+                    </div>
                 </div>
                 <div class="streams-grid" id="streamsGrid"></div>
             </section>
@@ -604,8 +644,27 @@
         <div class="page" id="page-browse">
             <section class="streams-section" style="padding-top: 32px;">
                 <div class="section-header">
-                    <h2 class="section-title">All Models</h2>
-                    <div class="filter-tabs" id="browseFilterTabs">
+                    <h2 class="section-title">All Linkups</h2>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                        <select class="location-filter" id="browseLocationFilter">
+                            <option value="all">All Cities</option>
+                            <option value="Pretoria">Pretoria</option>
+                            <option value="Johannesburg">Johannesburg</option>
+                            <option value="Durban">Durban</option>
+                            <option value="Cape Town">Cape Town</option>
+                            <option value="Port Elizabeth">Port Elizabeth</option>
+                            <option value="Bloemfontein">Bloemfontein</option>
+                            <option value="Nelspruit">Nelspruit</option>
+                            <option value="Polokwane">Polokwane</option>
+                            <option value="Rustenburg">Rustenburg</option>
+                            <option value="Kimberley">Kimberley</option>
+                            <option value="East London">East London</option>
+                            <option value="Pietermaritzburg">Pietermaritzburg</option>
+                        </select>
+                        <select class="location-filter" id="browseRegionFilter" style="display:none;">
+                            <option value="all">All Areas</option>
+                        </select>
+                        <div class="filter-tabs" id="browseFilterTabs">
                         <button class="filter-tab active" data-cat="all">All</button>
                         <button class="filter-tab" data-cat="young">Young</button>
                         <button class="filter-tab" data-cat="mature">Mature</button>
@@ -622,6 +681,7 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
+                    </div>
                     </div>
                 </div>
                 <div class="streams-grid" id="browseGrid"></div>
@@ -685,6 +745,36 @@
                         <div class="note">Special offer: Save R550 on your first two months!</div>
                     </div>
                     <form id="joinForm" onsubmit="handleJoinSubmit(event)">
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;">
+                                <input type="checkbox" id="regLinkups" name="linkups" style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+                                <span style="font-size:14px;font-weight:500;color:var(--text);">I also want to be listed for Linkups (in-person meetings)</span>
+                            </label>
+                        </div>
+                        <div class="form-group" id="regionGroup" style="display:none;">
+                            <label for="regCity">Your City (Optional)</label>
+                            <select id="regCity" name="city">
+                                <option value="">Select your city</option>
+                                <option value="Pretoria">Pretoria</option>
+                                <option value="Johannesburg">Johannesburg</option>
+                                <option value="Durban">Durban</option>
+                                <option value="Cape Town">Cape Town</option>
+                                <option value="Port Elizabeth">Port Elizabeth</option>
+                                <option value="Bloemfontein">Bloemfontein</option>
+                                <option value="Nelspruit">Nelspruit</option>
+                                <option value="Polokwane">Polokwane</option>
+                                <option value="Rustenburg">Rustenburg</option>
+                                <option value="Kimberley">Kimberley</option>
+                                <option value="East London">East London</option>
+                                <option value="Pietermaritzburg">Pietermaritzburg</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="suburbGroup" style="display:none;">
+                            <label for="regSuburb">Your Suburb / Area (Optional)</label>
+                            <select id="regSuburb" name="suburb">
+                                <option value="">Select your area</option>
+                            </select>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="regUsername">Username</label>
@@ -844,21 +934,40 @@
     </div>
 
     <script>
-        // Stream data with gender and age fields
-        const streams = [
-            { id: 1, title: "Come have a sensual experience with a feisty babe", streamer: "Snowdrop", age: 25, gender: "female", category: "ebony", thumbnail: "https://i.ibb.co/DHczXtmV/ID17b.jpg", verified: true, uniqueCode: "SC-SARA-9921", whatsapp: "+27765713720", timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"] },
-            { id: 2, title: "I am the girl next door with a naughty side", streamer: "Joii", age: 22, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/ccgXhNQD/ID16b.jpg", verified: true, uniqueCode: "SC-MIKE-4452", whatsapp: "+274113117159", timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"] },
-            { id: 3, title: "Hot sexy lady, very tiny and tight in all the right places.", streamer: "Abby", age: 21, gender: "female", category: "slim",  thumbnail: "https://i.ibb.co/5WgtQwGq/ID15d.jpg", verified: true, uniqueCode: "SC-LISA-7783", whatsapp: "+27123456791", timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"] },
-            { id: 4, title: "Feeling freaky? Seductive Red fox, open minded", streamer: "Crystal", age: 35, gender: "female", category: "coloured", thumbnail: "https://i.ibb.co/HfBkpSqn/ID12b.jpg", verified: false, uniqueCode: "SC-GAME-1124", whatsapp: "+27123456792", timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"] },
-            { id: 5, title: "Sexy slender erotic dream. Come see me", streamer: "Melinda", age: 29, gender: "female", category: "slim", thumbnail: "https://i.ibb.co/7xJXhZfm/ID5c.jpg", verified: true, uniqueCode: "SC-AMY-6655", whatsapp: "+27123456793", timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"] },
-            { id: 6, title: "Cute babe with curves in all the right places. Cum and play.", streamer: "Keisha", age: 23, gender: "female", category: "bbw", thumbnail: "https://i.ibb.co/TMgGh0gS/ID11b.jpg", verified: false, uniqueCode: "SC-CARL-3386", whatsapp: "+27123456794", timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"] },
-            { id: 7, title: "A curvy babe that will love for you to come and have some fun with her.", streamer: "Wendy", age: 31, gender: "female", category: "bbw", thumbnail: "https://i.ibb.co/R4HtCfdc/ID3c.jpg", verified: false, uniqueCode: "SC-STUD-5547", whatsapp: "+27123456795", timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"] },
-            { id: 8, title: "Very Curvaceous Babe! Curves in all the right places", streamer: "Zinhle", age: 26, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/QvxZhmfD/ID14b.jpg", verified: true, uniqueCode: "SC-FION-8878", whatsapp: "+27123456796", timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"] },
-            { id: 9, title: "With all the right curves in all the right places, come satisfy your desires", streamer: "Liza", age: 22, gender: "female", category: "thick", thumbnail: "https://i.ibb.co/39ST11Br/ID1.jpg", verified: true, uniqueCode: "SC-PULS-9901", whatsapp: "+27123456797", timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"] },
-            { id: 10, title: "Hi there! I'm Mel", streamer: "Mel", age: 28, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/ynmXM2nV/ID4a.jpg", verified: false, uniqueCode: "SC-WAND-2202", whatsapp: "+27123456798", timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"] },
-            { id: 11, title: "A hot, busty, super sexy curvylicious honey that's home alone and waiting for you", streamer: "Kimberley", age: 28, gender: "female", category: "busty", thumbnail: "https://i.ibb.co/cXQkfNZT/ID9a.jpg", verified: true, uniqueCode: "SC-NINJ-3303", whatsapp: "+27123456799", timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"] },
-            { id: 12, title: "A hot honey for lots of fun. Ask about my greek specials", streamer: "Thato", age: 24, gender: "female", category: "mature", thumbnail: "https://i.ibb.co/WpnDnv4L/ID6a.jpg", verified: true, uniqueCode: "SC-GINA-4404", whatsapp: "+27123456800", timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"] },
-            
+        // City regions/suburbs data
+        const cityRegions = {
+            "Pretoria": ["Arcadia", "Brooklyn", "Centurion", "Clubview", "Faerie Glen", "Garsfontein", "Hatfield", "Lynnwood", "Menlyn", "Montana", "Moreleta Park", "Muckleneuk", "Newlands", "Silverton", "Sunnyside", "Waterkloof", "Wonderboom", "Akasia", "Mabopane", "Soshanguve", "Atteridgeville", "Mamelodi", "Eersterust", "Waverley", "Colbyn"],
+            "Johannesburg": ["Alexandra", "Bedfordview", "Berea", "Braamfontein", "Bryanston", "Craighall", "Crown Mines", "Douglasdale", "Dunkeld", "Emmarentia", "Fourways", "Greenside", "Houghton", "Hyde Park", "Illovo", "Johannesburg CBD", "Kensington", "Killarney", "Linden", "Malvern", "Melrose", "Melville", "Midrand", "Morningside", "Northcliff", "Norwood", "Observatory", "Orange Grove", "Parkhurst", "Parktown", "Randburg", "Randpark Ridge", "Rivonia", "Roodepoort", "Rosebank", "Sandton", "Soweto", "Sunninghill", "Woodmead", "Yeoville"],
+            "Durban": ["Amanzimtoti", "Berea", "Bluff", "Chatsworth", "Durban CBD", "Durban North", "Glenwood", "Hillcrest", "Kloof", "La Lucia", "Morningside", "Mount Edgecombe", "Musgrave", "Overport", "Phoenix", "Pinetown", "Point Waterfront", "Queensburgh", "Sea View", "Sydenham", "Umbilo", "Umhlanga", "Umlazi", "Westville", "Windermere", "Yellowwood Park"],
+            "Cape Town": ["Athlone", "Bantry Bay", "Bergvliet", "Blueberg", "Bo-Kaap", "Camps Bay", "Cape Town CBD", "Claremont", "Clifton", "Constantia", "Diep River", "Durbanville", "Fish Hoek", "Gardens", "Green Point", "Hout Bay", "Kensington", "Kirstenhof", "Kommetjie", "Kraaifontein", "Lansdowne", "Mitchells Plain", "Muizenberg", "Newlands", "Observatory", "Paarden Eiland", "Panorama", "Parklands", "Parow", "Pinelands", "Rondebosch", "Sea Point", "Simons Town", "Somerset West", "Steenberg", "Stellenbosch", "Strand", "Table View", "Tokai", "Tygervalley", "Woodstock", "Wynberg"],
+            "Port Elizabeth": ["Algoa Park", "Central", "Charlo", "Cotswold", "Despatch", "Fernglen", "Gelvandale", "Gqeberha CBD", "Greenacres", "Humewood", "Kabega Park", "Kemsley Park", "Korsten", "Linton Grange", "Lovemore Park", "Mill Park", "Mount Croix", "New Brighton", "Newton Park", "North End", "Parsons Hill", "Port Elizabeth", "Richmond Hill", "Schauderville", "Seaview", "Sherwood", "South End", "St Georges Park", "Summerstrand", "Sydenham", "Theescombe", "Walmer", "Westering", "Woodlands"],
+            "Bloemfontein": ["Bayswater", "Bloemfontein CBD", "Brandwag", "Dan Pienaar", "Fichardtpark", "Generaal De Wet", "Heidedal", "Hilton", "Langenhoven Park", "Mangaung", "Maselspoort", "Naval Hill", " Noordhoek", "Ooseinde", "Park West", "Pellissier", "Rayton", "Roodewal", "Rosestad", "Sasolburg", "Universitas", "Uitsig", "Vista Park", "Waverley", "Westdene", "Wilgehof", "Willows"],
+            "Nelspruit": ["Crocodile Valley", "Ehlanzeni", "Kamagugu", "Kanyamazane", "Kiepersol", "Lekazi", "Marloth Park", "Matsulu", "Mbombela", "Nelspruit CBD", "Ngodwana", "Nkomazi", "Phola", "Rocky Drift", "Sabie", "Skukuza", "Tekwane", "White River"],
+            "Polokwane": ["Bendor", "Chuene", "Dendron", "Fauna Park", "Irene", "Lebowakgomo", "Mankweng", "Mokopane", "Namakgale", "New Pietersburg", "Polokwane CBD", "Seshego", "Thabazimbi", "Thohoyandou", "Turfloop", "University of Limpopo", "Welgelegen"],
+            "Rustenburg": ["Bafokeng", "Boitekong", "Cashan", "Geelhoutpark", "Kroondal", "Lethabong", "Meriting", "Mogwase", "Rustenburg CBD", "Safari Gardens", "Suncity", "Tlhabane", "Waterval"],
+            "Kimberley": ["Ashburnham", "Beaconsfield", "Cassandra", "De Beers", "Diamant Park", "Galeshewe", "Herlear", "Homestead", "Kimberley CBD", "Kimberley North", "Lucerne", "Mankurwane", "Moghul Park", "New Park", "Pescodia", "Ritchie", "Roodepan", "South Ridge", "Vergenoeg", "Wildeklawer"],
+            "East London": ["Amalinda", "Beacon Bay", "Berea", "Blue Bend", "Buffalo Flats", "Cambridge", "Dorchester Heights", "East London CBD", "Fernwood", "Gonubie", "Haven Hills", "Kidds Beach", "Mabel", "Meadowbrook", "Nahoon", "North End", "Pefferville", "Quigney", "Southernwood", "Sunnyridge", "Vincent", "West Bank"],
+            "Pietermaritzburg": ["Allandale", "Ashdown", "Bisley", "Copesville", "Dundee", "Edendale", "Elandskop", "Epumalanga", "Foxhill", "Glenwood", "Hilton", "Impendle", "Lincoln Meade", "Mbali", "Montrose", "Mountain Rise", "Northdale", "Pietermaritzburg CBD", "Plessislaer", "Scottsville", "Sweetwaters", "The Grange", "Town Bush", "Wembley", "Woodlands"]
+        };
+
+        function getRegionsForCity(city) {
+            return cityRegions[city] || [];
+        }
+
+        // Stream data with gender, age, and location fields
+                const streams = [
+            { id: 1, title: "Come have a sensual experience with a feisty babe", streamer: "Snowdrop", age: 25, gender: "female", category: "ebony", location: "Pretoria", region: "Arcadia", thumbnail: "https://i.ibb.co/DHczXtmV/ID17b.jpg", verified: true, uniqueCode: "SC-SARA-9921", whatsapp: "+27765713720", timeSlots: ["Mon Evening (18:00-00:00)", "Wed Evening (18:00-00:00)", "Fri Evening (18:00-00:00)", "Sat Night (00:00-08:00)"] },
+            { id: 2, title: "I am the girl next door with a naughty side", streamer: "Joii", age: 22, gender: "female", category: "slim", location: "Johannesburg", region: "Sandton", thumbnail: "https://i.ibb.co/ccgXhNQD/ID16b.jpg", verified: true, uniqueCode: "SC-MIKE-4452", whatsapp: "+274113117159", timeSlots: ["Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Evening (18:00-00:00)", "Sun Afternoon (12:00-18:00)"] },
+            { id: 3, title: "Hot sexy lady, very tiny and tight in all the right places.", streamer: "Abby", age: 21, gender: "female", category: "slim", location: "Durban", region: "Umhlanga", thumbnail: "https://i.ibb.co/5WgtQwGq/ID15d.jpg", verified: true, uniqueCode: "SC-LISA-7783", whatsapp: "+27123456791", timeSlots: ["Mon Afternoon (12:00-18:00)", "Wed Afternoon (12:00-18:00)", "Fri Afternoon (12:00-18:00)", "Sun Evening (18:00-00:00)"] },
+            { id: 4, title: "Feeling freaky? Seductive Red fox, open minded", streamer: "Crystal", age: 35, gender: "female", category: "coloured", location: "Cape Town", region: "Sea Point", thumbnail: "https://i.ibb.co/HfBkpSqn/ID12b.jpg", verified: false, uniqueCode: "SC-GAME-1124", whatsapp: "+27123456792", timeSlots: ["Mon Night (00:00-08:00)", "Wed Night (00:00-08:00)", "Fri Night (00:00-08:00)", "Sat Morning (08:00-12:00)"] },
+            { id: 5, title: "Sexy slender erotic dream. Come see me", streamer: "Melinda", age: 29, gender: "female", category: "slim", location: "Pretoria", region: "Menlyn", thumbnail: "https://i.ibb.co/7xJXhZfm/ID5c.jpg", verified: true, uniqueCode: "SC-AMY-6655", whatsapp: "+27123456793", timeSlots: ["Tue Afternoon (12:00-18:00)", "Thu Afternoon (12:00-18:00)", "Sat Afternoon (12:00-18:00)", "Sun Morning (08:00-12:00)"] },
+            { id: 6, title: "Cute babe with curves in all the right places. Cum and play.", streamer: "Keisha", age: 23, gender: "female", category: "bbw", location: "Johannesburg", region: "Randburg", thumbnail: "https://i.ibb.co/TMgGh0gS/ID11b.jpg", verified: false, uniqueCode: "SC-CARL-3386", whatsapp: "+27123456794", timeSlots: ["Mon Morning (08:00-12:00)", "Wed Morning (08:00-12:00)", "Fri Morning (08:00-12:00)", "Sat Night (00:00-08:00)"] },
+            { id: 7, title: "A curvy babe that will love for you to come and have some fun with her.", streamer: "Wendy", age: 31, gender: "female", category: "bbw", location: "Durban", region: "Berea", thumbnail: "https://i.ibb.co/R4HtCfdc/ID3c.jpg", verified: false, uniqueCode: "SC-STUD-5547", whatsapp: "+27123456795", timeSlots: ["Tue Morning (08:00-12:00)", "Thu Morning (08:00-12:00)", "Sat Morning (08:00-12:00)", "Sun Evening (18:00-00:00)"] },
+            { id: 8, title: "Very Curvaceous Babe! Curves in all the right places", streamer: "Zinhle", age: 26, gender: "female", category: "thick", location: "Cape Town", region: "Claremont", thumbnail: "https://i.ibb.co/QvxZhmfD/ID14b.jpg", verified: true, uniqueCode: "SC-FION-8878", whatsapp: "+27123456796", timeSlots: ["Mon Evening (18:00-00:00)", "Tue Evening (18:00-00:00)", "Thu Evening (18:00-00:00)", "Sat Afternoon (12:00-18:00)"] },
+            { id: 9, title: "With all the right curves in all the right places, come satisfy your desires", streamer: "Liza", age: 22, gender: "female", category: "thick", location: "Pretoria", region: "Hatfield", thumbnail: "https://i.ibb.co/39ST11Br/ID1.jpg", verified: true, uniqueCode: "SC-PULS-9901", whatsapp: "+27123456797", timeSlots: ["Wed Morning (08:00-12:00)", "Fri Afternoon (12:00-18:00)", "Sat Evening (18:00-00:00)", "Sun Night (00:00-08:00)"] },
+            { id: 10, title: "Hi there! I'm Mel", streamer: "Mel", age: 28, gender: "female", category: "mature", location: "Johannesburg", region: "Rosebank", thumbnail: "https://i.ibb.co/ynmXM2nV/ID4a.jpg", verified: false, uniqueCode: "SC-WAND-2202", whatsapp: "+27123456798", timeSlots: ["Mon Afternoon (12:00-18:00)", "Tue Night (00:00-08:00)", "Thu Morning (08:00-12:00)", "Sat Afternoon (12:00-18:00)"] },
+            { id: 11, title: "A hot, busty, super sexy curvylicious honey that's home alone and waiting for you", streamer: "Kimberley", age: 28, gender: "female", category: "busty", location: "Durban", region: "Morningside", thumbnail: "https://i.ibb.co/cXQkfNZT/ID9a.jpg", verified: true, uniqueCode: "SC-NINJ-3303", whatsapp: "+27123456799", timeSlots: ["Tue Evening (18:00-00:00)", "Wed Afternoon (12:00-18:00)", "Fri Night (00:00-08:00)", "Sun Morning (08:00-12:00)"] },
+            { id: 12, title: "A hot honey for lots of fun. Ask about my greek specials", streamer: "Thato", age: 24, gender: "female", category: "mature", location: "Cape Town", region: "Green Point", thumbnail: "https://i.ibb.co/WpnDnv4L/ID6a.jpg", verified: true, uniqueCode: "SC-GINA-4404", whatsapp: "+27123456800", timeSlots: ["Mon Night (00:00-08:00)", "Wed Evening (18:00-00:00)", "Fri Afternoon (12:00-18:00)", "Sat Morning (08:00-12:00)"] },
         ];
 
         // Profile data with galleries, bios, and matching categories
@@ -1056,7 +1165,7 @@
 
             // Re-render content when switching to specific pages
             if (pageName === 'profiles') {
-                renderProfiles();
+                renderProfiles('profilesGrid', 'all', 'all', 'all');
             }
 
             // Scroll to top
@@ -1099,7 +1208,7 @@
                             <div class="streamer-avatar">${stream.streamer.charAt(0)}</div>
                             <div class="streamer-meta">
                                 <div class="streamer-name">${stream.streamer} ${stream.verified ? '<i class="fas fa-check-circle verified"></i>' : ''}</div>
-                                <div class="streamer-details">${genderIcon} ${ageBadge} <span>${(stream.category || '').charAt(0).toUpperCase() + (stream.category || '').slice(1)}</span></div>
+                                <div class="streamer-details">${genderIcon} ${ageBadge} <span>${(stream.category || '').charAt(0).toUpperCase() + (stream.category || '').slice(1)}</span> <span style="color:var(--accent);font-size:12px;"><i class="fas fa-map-marker-alt" style="margin-right:3px;"></i>${stream.location || 'South Africa'}${stream.region ? ' &bull; ' + stream.region : ''}</span></div>
                             </div>
                         </div>
                         <div class="stream-title">${stream.title}</div>
@@ -1120,19 +1229,46 @@
             `;
         }
 
-        // Render streams
-        function renderStreams(containerId, filter) {
+        // Active filters state
+        const activeFilters = {
+            home: { category: 'all', location: 'all', region: 'all' },
+            browse: { category: 'all', location: 'all', region: 'all' }
+        };
+
+        // Render streams with combined category + location + region filter
+        function renderStreams(containerId, filter, locationFilter, regionFilter) {
             filter = filter || 'all';
+            locationFilter = locationFilter || 'all';
+            regionFilter = regionFilter || 'all';
             const container = document.getElementById(containerId);
             if (!container) return;
-            const filtered = filter === 'all' ? streams : streams.filter(s => s.category === filter);
+            let filtered = streams;
+            if (filter !== 'all') {
+                filtered = filtered.filter(s => s.category === filter);
+            }
+            if (locationFilter !== 'all') {
+                filtered = filtered.filter(s => s.location === locationFilter);
+            }
+            // Only filter by region if a specific region is selected (not 'all')
+            if (regionFilter !== 'all' && regionFilter !== '') {
+                filtered = filtered.filter(s => s.region === regionFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--text-muted);"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5;"></i><h3 style="font-size:20px;margin-bottom:8px;color:var(--text);">No models found</h3><p>Try adjusting your filters to see more results.</p></div>';
+                return;
+            }
+
             container.innerHTML = filtered.map(renderStreamCard).join('');
         }
 
         // Filter function using event delegation - works with data attributes
-        function setupFilterButtons(containerId, targetGridId, renderFn) {
+        function setupFilterButtons(containerId, targetGridId, renderFn, pageKey, locationSelectId, regionSelectId) {
             const container = document.getElementById(containerId);
-            if (!container) return;
+            if (!container) {
+                console.error('Filter container not found:', containerId);
+                return;
+            }
 
             container.addEventListener('click', function(e) {
                 const btn = e.target.closest('.filter-tab');
@@ -1145,8 +1281,113 @@
                 container.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 btn.classList.add('active');
 
+                // Update active filter state
+                if (pageKey) activeFilters[pageKey].category = category;
+
+                // Get current location and region filters
+                const locSelect = locationSelectId ? document.getElementById(locationSelectId) : null;
+                const location = locSelect ? (locSelect.value || 'all') : 'all';
+
+                const regSelect = regionSelectId ? document.getElementById(regionSelectId) : null;
+                let region = 'all';
+                if (regSelect && regSelect.offsetParent !== null && regSelect.value && regSelect.value !== 'all') {
+                    region = regSelect.value;
+                }
+
                 // Render filtered content
-                renderFn(targetGridId, category);
+                try {
+                    renderFn(targetGridId, category, location, region);
+                } catch (err) {
+                    console.error('Error rendering filtered content:', err);
+                }
+            });
+        }
+
+        // Setup location filter dropdown with cascading regions
+        function setupLocationFilter(selectId, targetGridId, renderFn, pageKey, tabContainerId, regionSelectId) {
+            const select = document.getElementById(selectId);
+            const regionSelect = regionSelectId ? document.getElementById(regionSelectId) : null;
+            if (!select) {
+                console.error('Location select not found:', selectId);
+                return;
+            }
+
+            select.addEventListener('change', function() {
+                const location = this.value;
+                if (pageKey) activeFilters[pageKey].location = location;
+
+                // Populate region dropdown and reset to 'all'
+                if (regionSelect) {
+                    populateRegionDropdown(regionSelect, location);
+                    if (pageKey) activeFilters[pageKey].region = 'all';
+                }
+
+                // Get current category from the active tab
+                const tabContainer = tabContainerId ? document.getElementById(tabContainerId) : null;
+                let category = 'all';
+                if (tabContainer) {
+                    const activeTab = tabContainer.querySelector('.filter-tab.active');
+                    if (activeTab) category = activeTab.getAttribute('data-cat') || 'all';
+                }
+
+                try {
+                    renderFn(targetGridId, category, location, 'all');
+                } catch (err) {
+                    console.error('Error rendering location-filtered content:', err);
+                }
+            });
+        }
+
+        // Populate region dropdown based on city
+        function populateRegionDropdown(regionSelect, city) {
+            if (!regionSelect) return;
+            regionSelect.innerHTML = '<option value="all" selected>All Areas</option>';
+            if (city === 'all' || !city) {
+                regionSelect.style.display = 'none';
+                return;
+            }
+            const regions = getRegionsForCity(city);
+            if (!regions || regions.length === 0) {
+                regionSelect.style.display = 'none';
+                return;
+            }
+            regions.forEach(region => {
+                const opt = document.createElement('option');
+                opt.value = region;
+                opt.textContent = region;
+                regionSelect.appendChild(opt);
+            });
+            regionSelect.style.display = 'inline-block';
+            regionSelect.value = 'all';
+        }
+
+        // Setup region filter dropdown
+        function setupRegionFilter(selectId, targetGridId, renderFn, pageKey, tabContainerId, locationSelectId) {
+            const select = document.getElementById(selectId);
+            if (!select) {
+                console.error('Region select not found:', selectId);
+                return;
+            }
+            select.addEventListener('change', function() {
+                const region = this.value || 'all';
+                if (pageKey) activeFilters[pageKey].region = region;
+
+                // Get current category from the active tab
+                const tabContainer = tabContainerId ? document.getElementById(tabContainerId) : null;
+                let category = 'all';
+                if (tabContainer) {
+                    const activeTab = tabContainer.querySelector('.filter-tab.active');
+                    if (activeTab) category = activeTab.getAttribute('data-cat') || 'all';
+                }
+
+                const locSelect = locationSelectId ? document.getElementById(locationSelectId) : null;
+                const location = locSelect ? (locSelect.value || 'all') : 'all';
+
+                try {
+                    renderFn(targetGridId, category, location, region);
+                } catch (err) {
+                    console.error('Error rendering region-filtered content:', err);
+                }
             });
         }
 
@@ -1197,9 +1438,8 @@
         const galleryStates = {};
 
         function initGallery(galleryId, totalSlides) {
-            if (!galleryStates[galleryId]) {
-                galleryStates[galleryId] = { current: 0, total: totalSlides };
-            }
+            // Always reset/ensure gallery state is correct for this render
+            galleryStates[galleryId] = { current: 0, total: totalSlides };
         }
 
         function updateGallery(galleryId) {
@@ -1207,15 +1447,15 @@
             if (!state) return;
 
             const slides = document.getElementById(galleryId + '-slides');
-            if (slides) slides.style.transform = 'translateX(-' + (state.current * 100) + '%)';
-
-            // Update dots
-            const card = slides ? slides.closest('.profile-card') : null;
-            if (card) {
-                card.querySelectorAll('.gallery-dot').forEach((dot, i) => {
-                    dot.classList.toggle('active', i === state.current);
-                });
+            if (slides) {
+                slides.style.transform = 'translateX(-' + (state.current * 100) + '%)';
             }
+
+            // Update dots - find all dots with matching data-gallery
+            const allDots = document.querySelectorAll('.gallery-dot[data-gallery="' + galleryId + '"]');
+            allDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === state.current);
+            });
         }
 
         function nextSlide(galleryId) {
@@ -1266,10 +1506,10 @@
             });
         }
 
-        // Render profiles
-        function renderProfiles(filter) {
+        // Render profiles - accepts same 4-arg signature as renderStreams for consistency
+        function renderProfiles(containerId, filter, locationFilter, regionFilter) {
             filter = filter || 'all';
-            const container = document.getElementById('profilesGrid');
+            const container = document.getElementById(containerId || 'profilesGrid');
             if (!container) {
                 console.error('profilesGrid container not found');
                 return;
@@ -1279,7 +1519,12 @@
                 return;
             }
             const filtered = filter === 'all' ? profiles : profiles.filter(p => p.category === filter);
-            console.log('Rendering profiles, count:', filtered.length);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--text-muted);"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;display:block;opacity:0.5;"></i><h3 style="font-size:20px;margin-bottom:8px;color:var(--text);">No profiles found</h3><p>Try a different filter to see more results.</p></div>';
+                return;
+            }
+
             let html = '';
             for (let i = 0; i < filtered.length; i++) {
                 try {
@@ -1289,9 +1534,11 @@
                 }
             }
             container.innerHTML = html;
-            // Initialize galleries
+            // Reset gallery states and re-initialize
             filtered.forEach(p => {
-                initGallery('gallery-' + p.id, p.gallery.length);
+                const galleryId = 'gallery-' + p.id;
+                galleryStates[galleryId] = { current: 0, total: p.gallery.length };
+                updateGallery(galleryId);
             });
         }
 
@@ -1340,6 +1587,9 @@
             const ethnicity = document.getElementById('regEthnicity').value;
             const country = document.getElementById('regCountry').value;
             const bio = document.getElementById('regBio').value;
+            const linkups = document.getElementById('regLinkups').checked;
+            const city = document.getElementById('regCity') ? document.getElementById('regCity').value : '';
+            const suburb = document.getElementById('regSuburb') ? document.getElementById('regSuburb').value : '';
 
             // Get selected tags
             const selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value).join(', ');
@@ -1352,7 +1602,7 @@
                 return day + ' ' + time;
             }).join(', ');
 
-            const message = `Hi! I want to join StreamConnect. Here are my details:
+            const message = `Hi! I want to join LiveFantasy. Here are my details:
 
 Username: ${username}
 Age: ${age}
@@ -1361,6 +1611,9 @@ Ethnicity: ${ethnicity}
 Country: ${country}
 Tags: ${selectedTags || 'None selected'}
 Available Time Slots: ${selectedSlots || 'None selected'}
+Also listed for Linkups: ${linkups ? 'Yes' : 'No'}
+${linkups && city ? 'Linkups City: ' + city : ''}
+${linkups && suburb ? 'Linkups Area: ' + suburb : ''}
 Bio: ${bio}
 
 Please send me the next steps to complete my registration.`;
@@ -1370,6 +1623,39 @@ Please send me the next steps to complete my registration.`;
 
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
+            // Linkups checkbox toggle with cascading city -> suburb
+            const linkupsCheckbox = document.getElementById('regLinkups');
+            const regionGroup = document.getElementById('regionGroup');
+            const suburbGroup = document.getElementById('suburbGroup');
+            const regCity = document.getElementById('regCity');
+            const regSuburb = document.getElementById('regSuburb');
+
+            if (linkupsCheckbox && regionGroup) {
+                linkupsCheckbox.addEventListener('change', function() {
+                    regionGroup.style.display = this.checked ? 'block' : 'none';
+                    if (!this.checked && suburbGroup) suburbGroup.style.display = 'none';
+                });
+            }
+
+            if (regCity && regSuburb && suburbGroup) {
+                regCity.addEventListener('change', function() {
+                    const city = this.value;
+                    regSuburb.innerHTML = '<option value="">Select your area</option>';
+                    if (!city) {
+                        suburbGroup.style.display = 'none';
+                        return;
+                    }
+                    const suburbs = getRegionsForCity(city);
+                    suburbs.forEach(sub => {
+                        const opt = document.createElement('option');
+                        opt.value = sub;
+                        opt.textContent = sub;
+                        regSuburb.appendChild(opt);
+                    });
+                    suburbGroup.style.display = 'block';
+                });
+            }
+
             // Mobile menu toggle
             const navToggle = document.getElementById('navToggle');
             const navLinks = document.getElementById('navLinks');
@@ -1396,15 +1682,21 @@ Please send me the next steps to complete my registration.`;
             }
 
             // Render all grids
-            renderStreams('streamsGrid');
-            renderStreams('browseGrid');
-            renderProfiles();
+            renderStreams('streamsGrid', 'all', 'all', 'all');
+            renderStreams('browseGrid', 'all', 'all', 'all');
+            renderProfiles('profilesGrid', 'all', 'all', 'all');
             renderRooms();
 
             // Setup filter buttons with event delegation
-            setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams);
-            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams);
+            setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams, 'home', 'homeLocationFilter', 'homeRegionFilter');
+            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams, 'browse', 'browseLocationFilter', 'browseRegionFilter');
             setupFilterButtons('profilesFilterTabs', 'profilesGrid', renderProfiles);
+
+            // Setup location and region filters
+            setupLocationFilter('homeLocationFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeRegionFilter');
+            setupLocationFilter('browseLocationFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseRegionFilter');
+            setupRegionFilter('homeRegionFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeLocationFilter');
+            setupRegionFilter('browseRegionFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseLocationFilter');
 
             // Setup gallery controls
             setupGalleryControls();

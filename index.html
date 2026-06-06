@@ -889,12 +889,12 @@
             <div class="logo"><i class="fas fa-video"></i> LiveFantasy</div>
             <div class="nav-links" id="navLinks">
                 <button class="nav-link active" onclick="showPage('home')"><i class="fas fa-home" style="margin-right:6px"></i>Home</button>
-                <button class="nav-link" onclick="showPage('browse')"><i class="fas fa-compass" style="margin-right:6px"></i>Linkups</button>
+                <button class="nav-link" onclick="showPage('hookups')"><i class="fas fa-compass" style="margin-right:6px"></i>Hookups</button>
                 <button class="nav-link" onclick="showPage('profiles')"><i class="fas fa-users" style="margin-right:6px"></i>Profiles</button>
                 <button class="nav-link" onclick="showPage('live-rooms')"><i class="fas fa-door-open" style="margin-right:6px"></i>Playhouse</button>
             </div>
             <div class="nav-actions">
-                <button class="btn-whatsapp-nav" onclick="showPage('register')"><i class="fab fa-whatsapp"></i>Model Signup</button>
+                <button class="btn-whatsapp-nav" onclick="showPage('register')"><i class="fab fa-whatsapp"></i>Be A Model</button>
             </div>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
@@ -911,7 +911,7 @@
                     <p>For your personal pleasure!</p>
                     <div class="hero-buttons">
                         <button class="btn-large join" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Be A Model</button>
-                        <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-large whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                        <button class="btn-large secondary" onclick="showPage('live-rooms')"><i class="fas fa-door-open"></i> Visit Our Playhouse</button>
                     </div>
                 </div>
             </section>
@@ -970,12 +970,12 @@
         </div>
 
         <!-- Browse Page -->
-        <div class="page" id="page-browse">
+        <div class="page" id="page-hookups">
             <section class="streams-section" style="padding-top: 32px;">
                 <div class="section-header">
-                    <h2 class="section-title">All Linkups</h2>
+                    <h2 class="section-title">All Hookups</h2>
                     <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                        <select class="location-filter" id="browseLocationFilter">
+                        <select class="location-filter" id="hookupsLocationFilter">
                             <option value="all">All Cities</option>
                             <option value="Pretoria">Pretoria</option>
                             <option value="Johannesburg">Johannesburg</option>
@@ -990,10 +990,10 @@
                             <option value="East London">East London</option>
                             <option value="Pietermaritzburg">Pietermaritzburg</option>
                         </select>
-                        <select class="location-filter" id="browseRegionFilter" style="display:none;">
+                        <select class="location-filter" id="hookupsRegionFilter" style="display:none;">
                             <option value="all">All Areas</option>
                         </select>
-                        <div class="filter-tabs" id="browseFilterTabs">
+                        <div class="filter-tabs" id="hookupsFilterTabs">
                         <button class="filter-tab active" data-cat="all">All</button>
                         <button class="filter-tab" data-cat="young">Young</button>
                         <button class="filter-tab" data-cat="mature">Mature</button>
@@ -1014,7 +1014,7 @@
                     </div>
                     </div>
                 </div>
-                <div class="streams-grid" id="browseGrid"></div>
+                <div class="streams-grid" id="hookupsGrid"></div>
             </section>
         </div>
 
@@ -1079,8 +1079,8 @@
                     <form id="joinForm" onsubmit="handleJoinSubmit(event)">
                         <div class="form-group" style="margin-bottom: 20px;">
                             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;">
-                                <input type="checkbox" id="regLinkups" name="linkups" style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
-                                <span style="font-size:14px;font-weight:500;color:var(--text);">I also want to be listed for Linkups (in-person meetings)</span>
+                                <input type="checkbox" id="regHookups" name="linkups" style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+                                <span style="font-size:14px;font-weight:500;color:var(--text);">I also want to be listed for Hookups (in-person meetings)</span>
                             </label>
                         </div>
                         <div class="form-group" id="regionGroup" style="display:none;">
@@ -1654,7 +1654,7 @@
         // Active filters state
         const activeFilters = {
             home: { category: 'all', location: 'all', region: 'all' },
-            browse: { category: 'all', location: 'all', region: 'all' }
+            hookups: { category: 'all', location: 'all', region: 'all' }
         };
 
         // Render streams with combined category + location + region filter
@@ -2013,7 +2013,7 @@
             const ethnicity = document.getElementById('regEthnicity').value;
             const country = document.getElementById('regCountry').value;
             const bio = document.getElementById('regBio').value;
-            const linkups = document.getElementById('regLinkups').checked;
+            const linkups = document.getElementById('regHookups').checked;
             const city = document.getElementById('regCity') ? document.getElementById('regCity').value : '';
             const suburb = document.getElementById('regSuburb') ? document.getElementById('regSuburb').value : '';
 
@@ -2038,9 +2038,9 @@ Ethnicity: ${ethnicity}
 Country: ${country}
 Tags: ${selectedTags || 'None selected'}
 Available Time Slots: ${selectedSlots || 'None selected'}
-Also listed for Linkups: ${linkups ? 'Yes' : 'No'}
-${linkups && city ? 'Linkups City: ' + city : ''}
-${linkups && suburb ? 'Linkups Area: ' + suburb : ''}
+Also listed for Hookups: ${linkups ? 'Yes' : 'No'}
+${linkups && city ? 'Hookups City: ' + city : ''}
+${linkups && suburb ? 'Hookups Area: ' + suburb : ''}
 Bio: ${bio}
 
 Please send me the next steps to complete my registration.`;
@@ -2050,8 +2050,8 @@ Please send me the next steps to complete my registration.`;
 
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
-            // Linkups checkbox toggle with cascading city -> suburb
-            const linkupsCheckbox = document.getElementById('regLinkups');
+            // Hookups checkbox toggle with cascading city -> suburb
+            const linkupsCheckbox = document.getElementById('regHookups');
             const regionGroup = document.getElementById('regionGroup');
             const suburbGroup = document.getElementById('suburbGroup');
             const regCity = document.getElementById('regCity');
@@ -2110,20 +2110,20 @@ Please send me the next steps to complete my registration.`;
 
             // Render all grids
             renderStreams('streamsGrid', 'all', 'all', 'all');
-            renderStreams('browseGrid', 'all', 'all', 'all');
+            renderStreams('hookupsGrid', 'all', 'all', 'all');
             renderProfiles('profilesGrid', 'all', 'all', 'all');
             renderRooms();
 
             // Setup filter buttons with event delegation
             setupFilterButtons('homeFilterTabs', 'streamsGrid', renderStreams, 'home', 'homeLocationFilter', 'homeRegionFilter');
-            setupFilterButtons('browseFilterTabs', 'browseGrid', renderStreams, 'browse', 'browseLocationFilter', 'browseRegionFilter');
+            setupFilterButtons('hookupsFilterTabs', 'hookupsGrid', renderStreams, 'hookups', 'hookupsLocationFilter', 'hookupsRegionFilter');
             setupFilterButtons('profilesFilterTabs', 'profilesGrid', renderProfiles);
 
             // Setup location and region filters
             setupLocationFilter('homeLocationFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeRegionFilter');
-            setupLocationFilter('browseLocationFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseRegionFilter');
+            setupLocationFilter('hookupsLocationFilter', 'hookupsGrid', renderStreams, 'browse', 'hookupsFilterTabs', 'hookupsRegionFilter');
             setupRegionFilter('homeRegionFilter', 'streamsGrid', renderStreams, 'home', 'homeFilterTabs', 'homeLocationFilter');
-            setupRegionFilter('browseRegionFilter', 'browseGrid', renderStreams, 'browse', 'browseFilterTabs', 'browseLocationFilter');
+            setupRegionFilter('hookupsRegionFilter', 'hookupsGrid', renderStreams, 'browse', 'hookupsFilterTabs', 'hookupsLocationFilter');
 
             // Setup gallery controls
             setupGalleryControls();

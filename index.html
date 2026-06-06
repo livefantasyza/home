@@ -236,6 +236,23 @@
         .gender-sign { font-size: 14px; }
         .gender-female { color: var(--secondary); }
         .gender-male { color: var(--accent); }
+        .gender-lgbtqi { 
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .badge-lgbtqi {
+            background: linear-gradient(135deg, #ff0018, #ffa52c, #ffff41, #008018, #0000f9, #86007d);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 100px;
+            margin-left: 4px;
+        }
         .age-badge { background: rgba(99, 102, 241, 0.2); color: var(--primary); padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 600; }
         .stream-title { font-size: 14px; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .stream-actions { display: flex; gap: 8px; }
@@ -863,6 +880,7 @@
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
@@ -876,7 +894,7 @@
                 <button class="nav-link" onclick="showPage('live-rooms')"><i class="fas fa-door-open" style="margin-right:6px"></i>Playhouse</button>
             </div>
             <div class="nav-actions">
-                <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-whatsapp-nav" target="_blank"><i class="fab fa-whatsapp"></i>Register</a>
+                <button class="btn-whatsapp-nav" onclick="showPage('register')"><i class="fab fa-whatsapp"></i>Model Signup</button>
             </div>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
@@ -892,7 +910,7 @@
                     <h1>Private Video Chats<br>connect with horny models</h1>
                     <p>For your personal pleasure!</p>
                     <div class="hero-buttons">
-                        <button class="btn-large join" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Join Now</button>
+                        <button class="btn-large join" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Be A Model</button>
                         <a href="https://wa.me/27812797778?text=Hi! I'm interested in LiveFantasy." class="btn-large whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
                     </div>
                 </div>
@@ -943,6 +961,7 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
+                        <button class="filter-tab" data-cat="lgbtqi">LGBTQI+</button>
                     </div>
                     </div>
                 </div>
@@ -991,6 +1010,7 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
+                        <button class="filter-tab" data-cat="lgbtqi">LGBTQI+</button>
                     </div>
                     </div>
                 </div>
@@ -1020,6 +1040,7 @@
                         <button class="filter-tab" data-cat="play">Role Play</button>
                         <button class="filter-tab" data-cat="busty">Busty</button>
                         <button class="filter-tab" data-cat="joi">JOI</button>
+                        <button class="filter-tab" data-cat="lgbtqi">LGBTQI+</button>
                     </div>
                 </div>
                 <div class="profiles-grid" id="profilesGrid"></div>
@@ -1051,8 +1072,9 @@
                     </div>
                     <div class="pricing-box">
                         <div class="original">R350/month</div>
-                        <div class="discounted">R350 / 2 Months Signup Promo</div>
-                        <div class="note">Special offer: Save R550 on your first two months!</div>
+                        <div class="discounted">R150 / 1 Month</div>
+                        <div class="discounted" style="margin-top:4px;">R350 / 3 Months</div>
+                        <div class="note">Special offer valid this month only!</div>
                     </div>
                     <form id="joinForm" onsubmit="handleJoinSubmit(event)">
                         <div class="form-group" style="margin-bottom: 20px;">
@@ -1097,6 +1119,15 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="regGender">Gender</label>
+                                <select id="regGender" name="gender" required>
+                                    <option value="">Select gender</option>
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                    <option value="lgbtqi">LGBTQI+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="regType">Type</label>
                                 <select id="regType" name="type" required>
                                     <option value="">Select type</option>
@@ -1105,18 +1136,18 @@
                                     <option value="fit">Fit</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="regEthnicity">Ethnicity</label>
-                                <select id="regEthnicity" name="ethnicity" required>
-                                    <option value="">Select ethnicity</option>
-                                    <option value="asian">Asian</option>
-                                    <option value="black">Black</option>
-                                    <option value="coloured">Coloured</option>
-                                    <option value="white">White</option>
-                                    <option value="mixed">Mixed</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEthnicity">Ethnicity</label>
+                            <select id="regEthnicity" name="ethnicity" required>
+                                <option value="">Select ethnicity</option>
+                                <option value="asian">Asian</option>
+                                <option value="black">Black</option>
+                                <option value="coloured">Coloured</option>
+                                <option value="white">White</option>
+                                <option value="mixed">Mixed</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="regCountry">Country</label>
@@ -1154,6 +1185,7 @@
                                 <label class="tag-checkbox"><input type="checkbox" name="tags" value="play"> Role Play</label>
                                 <label class="tag-checkbox"><input type="checkbox" name="tags" value="busty"> Busty</label>
                                 <label class="tag-checkbox"><input type="checkbox" name="tags" value="joi"> JOI</label>
+                                <label class="tag-checkbox"><input type="checkbox" name="tags" value="lgbtqi"> LGBTQI+</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1574,6 +1606,7 @@
         function getGenderIcon(gender) {
             if (gender === 'female') return '<span class="gender-sign gender-female">&#9792;</span>';
             if (gender === 'male') return '<span class="gender-sign gender-male">&#9794;</span>';
+            if (gender === 'lgbtqi') return '<span class="gender-sign gender-lgbtqi" title="LGBTQI+">&#9825;</span>';
             return '';
         }
 
@@ -1608,7 +1641,7 @@
                             <a href="https://instagram.com/${stream.streamer.toLowerCase().replace(/\s+/g, '')}" class="btn-action" target="_blank" onclick="event.stopPropagation()">
                                 <i class="fab fa-instagram"></i> Follow
                             </a>
-                            <a href="https://wa.me/${stream.whatsapp}?text=Hi ${stream.streamer}! I found you on LiveFantasy. My unique code is: ${stream.uniqueCode}" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
+                            <a href="https://wa.me/${stream.whatsapp}?text=Hi ${stream.streamer}! I found you on LiveFantasy. What services do you offer?" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
                                 <i class="fab fa-whatsapp"></i> Chat
                             </a>
                         </div>
@@ -1818,7 +1851,7 @@
                         <button class="btn-view-profile" onclick="openProfileModal(${profile.id}); event.stopPropagation();">
                             <i class="fas fa-user"></i> View Profile
                         </button>
-                        <a href="https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy and would love to live chat with you." class="btn-live-chat" target="_blank">
+                        <a href="https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy. What services do you offer?" class="btn-live-chat" target="_blank">
                             <i class="fab fa-whatsapp"></i> Live Chat
                         </a>
                     </div>
@@ -1975,6 +2008,7 @@
             e.preventDefault();
             const username = document.getElementById('regUsername').value;
             const age = document.getElementById('regAge').value;
+            const gender = document.getElementById('regGender').value;
             const type = document.getElementById('regType').value;
             const ethnicity = document.getElementById('regEthnicity').value;
             const country = document.getElementById('regCountry').value;
@@ -1998,6 +2032,7 @@
 
 Username: ${username}
 Age: ${age}
+Gender: ${gender}
 Type: ${type}
 Ethnicity: ${ethnicity}
 Country: ${country}
@@ -2137,7 +2172,7 @@ Please send me the next steps to complete my registration.`;
 
             // Set WhatsApp link
             document.getElementById('profileModalWhatsApp').href = 
-                `https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy and would love to live chat with you.`;
+                `https://wa.me/${profile.whatsapp}?text=Hi ${profile.name}! I found you on LiveFantasy. What services do you offer?`;
 
             // Set shareable URL
             const shareUrl = `${window.location.origin}${window.location.pathname}#profile=${profile.id}`;
